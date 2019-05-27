@@ -96,7 +96,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new HelpFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.content_main, fragment)
-                .commit();
+                    .addToBackStack(null)
+                    .commit();
 
         } //else if (id == R.id.nav_send) {
 
