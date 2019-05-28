@@ -85,6 +85,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
             Log.d(TAG,"Home");
+            fragment = new HomeFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.content_main, fragment)
+                    .addToBackStack(null)
+                    .commit();
         } else if (id == R.id.nav_interpret) {
             Log.d(TAG,"Interp");
         } else if (id == R.id.nav_saved) {
