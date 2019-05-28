@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
+        Log.d(TAG,"Settings");
         return super.onOptionsItemSelected(item);
     }
 
