@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
+import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.R;
 
@@ -31,6 +33,12 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "Camera", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Fragment helpFragment = new CamFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_main, helpFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
         Button help = getView().findViewById(R.id.help_button);
