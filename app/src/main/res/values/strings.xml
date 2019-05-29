@@ -18,4 +18,8 @@
     <string name="help_question_1_text">How does this app work?</string>
     <string name="help_question_2_text">How accurate are my results?</string>
     <string name="help_question_3_text">What test devices does this app support?</string>
+
+    <string-array name="test_array">
+        <item>Insti HIV Test</item>
+    </string-array>
 </resources>
