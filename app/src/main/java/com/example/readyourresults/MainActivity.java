@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.Home.HomeFragment;
+import com.example.readyourresults.MySavedResults.MySavedResultsFragment;
+import com.example.readyourresults.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity 
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -88,28 +90,26 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             Log.d(TAG,"Home");
             fragment = new HomeFragment();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.content_main, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            launchFragment(fragmentManager, fragment);
         } else if (id == R.id.nav_interpret) {
-            Log.d(TAG,"Interp");
+            Log.d(TAG,"Interpret Results menu item selected.");
             fragment = new CamFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.content_main, fragment)
                     .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_saved) {
-            Log.d(TAG,"Saved");
+            Log.d(TAG,"My Saved Results menu item selected.");
+            fragment = new MySavedResultsFragment();
+            launchFragment(fragmentManager, fragment);
         } else if (id == R.id.nav_settings) {
-            Log.d(TAG,"Settings");
+            Log.d(TAG,"Settings menu item selected.");
+            fragment = new SettingsFragment();
+            launchFragment(fragmentManager, fragment);
         } else if (id == R.id.nav_help) {
-            Log.d(TAG,"Help");
+            Log.d(TAG,"Help menu item selected.");
             fragment = new HelpFragment();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.content_main, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            launchFragment(fragmentManager, fragment);
 
         } //else if (id == R.id.nav_send) {
 
@@ -117,5 +117,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void launchFragment(FragmentManager fragmentManager, Fragment launchFragment) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.content_main, launchFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
