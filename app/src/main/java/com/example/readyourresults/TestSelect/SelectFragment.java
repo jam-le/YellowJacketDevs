@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.support.v4.app.Fragment;
 import android.widget.Spinner;
 
+import com.example.readyourresults.Camera.CamFragment;
+import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.R;
 
 public class SelectFragment extends Fragment {
@@ -24,13 +26,27 @@ public class SelectFragment extends Fragment {
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //Spinner
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner);
-// Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
                 R.array.test_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        //Scan Results
+        Button scan = getView().findViewById(R.id.scan_button);
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Camera", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Fragment camFragment = new CamFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_main, camFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 }

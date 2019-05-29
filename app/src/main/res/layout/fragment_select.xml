@@ -39,7 +39,7 @@
         app:layout_constraintVertical_bias="0.133" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -57,7 +57,7 @@
         app:layout_constraintVertical_bias="0.917" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/testInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,7 +75,7 @@
         app:layout_constraintVertical_bias="0.293" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/instiLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
