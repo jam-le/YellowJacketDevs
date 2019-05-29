@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">readyourresults</string>
+    <string name="app_name">RYR</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Read Your Results</string>
@@ -11,6 +11,11 @@
     <string name="menu_interpret">Interpret Results</string>
     <string name="menu_saved">My Saved Results</string>
     <string name="menu_settings">Settings</string>
+
+    <!-- Help Screen -->
     <string name="menu_help">Help</string>
     <string name="help_button_text">Help</string>
+    <string name="help_question_1_text">How does this app work?</string>
+    <string name="help_question_2_text">How accurate are my results?</string>
+    <string name="help_question_3_text">What test devices does this app support?</string>
 </resources>
