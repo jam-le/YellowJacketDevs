@@ -14,7 +14,7 @@
             android:title="@string/menu_interpret" />
         <item
             android:id="@+id/nav_saved"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_folder"
             android:title="@string/menu_saved" />
         <item
             android:id="@+id/nav_settings"

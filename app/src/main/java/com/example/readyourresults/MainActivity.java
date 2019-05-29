@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.Home.HomeFragment;
 import com.example.readyourresults.MySavedResults.MySavedResultsFragment;
@@ -85,7 +87,11 @@ public class MainActivity extends AppCompatActivity
             launchFragment(fragmentManager, fragment);
         } else if (id == R.id.nav_interpret) {
             Log.d(TAG,"Interpret Results menu item selected.");
-            //launch camera view
+            fragment = new CamFragment();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.content_main, fragment)
+                    .addToBackStack(null)
+                    .commit();
         } else if (id == R.id.nav_saved) {
             Log.d(TAG,"My Saved Results menu item selected.");
             fragment = new MySavedResultsFragment();
