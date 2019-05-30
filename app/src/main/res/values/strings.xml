@@ -15,7 +15,14 @@
     <!-- Help Screen -->
     <string name="menu_help">Help</string>
     <string name="help_button_text">Help</string>
-    <string name="help_question_1_text">How does this app work?</string>
+    <string name="help_question_1_text">How do I use this app?</string>
+    <string name="help_answer_1_text">1. Tap the \"Interpret Results\" button on the Home screen or side navigation drawer.\n\n2. Select the test device that you used.\n\n3. Point your phone\'s camera at the device, fitting the device between the guidelines that appear on screen.\n\n4. Snap a picture and wait for your results to process.\n\n\5. Once your results are ready, you can proceed to view your results.</string>
+
     <string name="help_question_2_text">How accurate are my results?</string>
+    <string name="help_answer_2_text">Link to information brochure.</string>
     <string name="help_question_3_text">What test devices does this app support?</string>
+    <string name="help_answer_3_text">Currently, only the Insti Rapid test is supported.</string>
+
+    <string name="help_question_4_text">Other Frequently Asked Questions</string>
+    <string name="help_answer_4_text">https://insti.com/faq/</string>
 </resources>
