@@ -26,7 +26,7 @@ import com.example.readyourresults.Settings.SettingsFragment;
 import com.example.readyourresults.TestSelect.SelectFragment;
 
 public class MainActivity extends AppCompatActivity 
-        implements NavigationView.OnNavigationItemSelectedListener, PasswordDialogueFragment.PasswordDialogueListener {
+        implements NavigationView.OnNavigationItemSelectedListener/*, PasswordDialogueFragment.PasswordDialogueListener*/ {
     private static final String TAG =MainActivity.class.getSimpleName();
 
     Fragment fragment;
@@ -101,8 +101,7 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_saved) {
-            ////openDialog();
-            handlePasswordProtection();
+            //handlePasswordProtection();
             Log.d(TAG,"My Saved Results menu item selected.");
             fragment = new MySavedResultsFragment();
             launchFragment(fragmentManager, fragment);
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+/*
     public void handlePasswordProtection() {
         //load password
         SharedPreferences settings = getSharedPreferences("PREFS", 0 );
@@ -141,16 +140,17 @@ public class MainActivity extends AppCompatActivity
         PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment();
         passwordDialogueFragment.show(getSupportFragmentManager(), "password Dialogue");
     }
-
+*/
     public void launchFragment(FragmentManager fragmentManager, Fragment launchFragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_main, launchFragment)
                 .addToBackStack(null)
                 .commit();
     }
-
+/*
     @Override
     public void applyText(String password) {
         this.password = password;
     }
+    */
 }
