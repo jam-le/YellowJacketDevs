@@ -1,5 +1,7 @@
 package com.example.readyourresults;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,27 +13,32 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.Home.HomeFragment;
 import com.example.readyourresults.MySavedResults.MySavedResultsFragment;
+import com.example.readyourresults.Password.CreatePasswordActivity;
+import com.example.readyourresults.Password.PasswordDialogueFragment;
 import com.example.readyourresults.Settings.SettingsFragment;
 import com.example.readyourresults.TestSelect.SelectFragment;
 
 public class MainActivity extends AppCompatActivity 
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, PasswordDialogueFragment.PasswordDialogueListener {
     private static final String TAG =MainActivity.class.getSimpleName();
 
     Fragment fragment;
     FragmentManager fragmentManager = getSupportFragmentManager();
+    String storedPassword;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,6 +101,8 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_saved) {
+            ////openDialog();
+            handlePasswordProtection();
             Log.d(TAG,"My Saved Results menu item selected.");
             fragment = new MySavedResultsFragment();
             launchFragment(fragmentManager, fragment);
@@ -114,10 +123,34 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void handlePasswordProtection() {
+        //load password
+        SharedPreferences settings = getSharedPreferences("PREFS", 0 );
+        storedPassword = settings.getString("password", "");
+        if(storedPassword.equals("")) {
+            //if there is no password
+            Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            openDialog();
+        }
+    }
+
+    public void openDialog() {
+        PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment();
+        passwordDialogueFragment.show(getSupportFragmentManager(), "password Dialogue");
+    }
+
     public void launchFragment(FragmentManager fragmentManager, Fragment launchFragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_main, launchFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void applyText(String password) {
+        this.password = password;
     }
 }
