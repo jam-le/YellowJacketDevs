@@ -23,7 +23,8 @@
             android:visibility="visible"
             android:layout_alignParentRight="true"
             android:layout_margin="8dp"
-            android:src="@android:drawable/arrow_down_float"
+            android:src="@drawable/ic_down_arrow"
+            android:backgroundTint="@color/colorTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
