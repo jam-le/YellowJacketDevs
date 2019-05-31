@@ -46,8 +46,6 @@ public class HomeFragment extends Fragment {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Help", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 Fragment helpFragment = new HelpFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
