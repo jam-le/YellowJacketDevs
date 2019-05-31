@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.176"
-        app:srcCompat="@drawable/ic_menu_gallery" />
+        app:srcCompat="@mipmap/insti_test" />
 
 
     <ScrollView
@@ -72,7 +72,7 @@
             <TextView
                 android:id="@+id/counselling_message_text"
                 android:layout_width="346dp"
-                android:layout_height="138dp"
+                android:layout_height="95dp"
                 android:gravity="center_horizontal"
                 android:text="Counselling message goes here"
                 tools:layout_editor_absoluteX="32dp"
@@ -85,7 +85,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/save_result_btn"
                     android:layout_width="148dp"
                     android:layout_height="53dp"
                     android:layout_marginStart="8dp"
@@ -105,7 +105,7 @@
                     app:layout_constraintVertical_bias="0.969" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/close_result_btn"
                     android:layout_width="148dp"
                     android:layout_height="53dp"
                     android:layout_marginStart="8dp"
