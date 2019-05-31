@@ -23,7 +23,7 @@
             android:visibility="visible"
             android:layout_alignParentRight="true"
             android:layout_margin="8dp"
-            android:src="@drawable/ic_down_arrow"
+            android:src="@drawable/ic_help_question_arrow"
             android:backgroundTint="@color/colorTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
