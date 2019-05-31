@@ -38,8 +38,6 @@ public class SelectFragment extends Fragment {
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Camera", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 Fragment camFragment = new CamFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
