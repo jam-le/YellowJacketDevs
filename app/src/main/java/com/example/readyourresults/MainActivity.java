@@ -22,6 +22,7 @@ import com.example.readyourresults.MySavedResults.MySavedResultsFragment;
 import com.example.readyourresults.Password.CreatePasswordActivity;
 import com.example.readyourresults.Password.PasswordDialogueFragment;
 import com.example.readyourresults.Settings.SettingsFragment;
+import com.example.readyourresults.TestSelect.SelectFragment;
 
 public class MainActivity extends AppCompatActivity 
         implements NavigationView.OnNavigationItemSelectedListener, PasswordDialogueFragment.PasswordDialogueListener {
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity
             launchFragment(fragmentManager, fragment);
         } else if (id == R.id.nav_interpret) {
             Log.d(TAG,"Interpret Results menu item selected.");
-            fragment = new CamFragment();
+            fragment = new SelectFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.content_main, fragment)
                     .addToBackStack(null)

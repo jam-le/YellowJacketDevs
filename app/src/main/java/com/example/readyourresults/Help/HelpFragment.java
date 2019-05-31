@@ -1,20 +1,95 @@
 package com.example.readyourresults.Help;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.readyourresults.R;
 
 public class HelpFragment extends Fragment {
+    //Recycler view may be better if there are many questions
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_help, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        final Button question_01 = getView().findViewById(R.id.button_question_1);
+        final Button question_02 = getView().findViewById(R.id.button_question_2);
+        final Button question_03 = getView().findViewById(R.id.button_question_3);
+        final Button question_04 = getView().findViewById(R.id.button_question_4);
+
+        final Drawable right_arrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_help_question_arrow, null);
+        final Drawable down_arrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_down_arrow, null);
+
+        question_01.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView answerbox = getView().findViewById(R.id.textview_answer_1);
+                if (answerbox.getVisibility() == View.GONE) {
+                    answerbox.setVisibility(View.VISIBLE);
+                    question_01.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
+                } else {
+                    answerbox.setVisibility(View.GONE);
+                    question_01.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
+                }
+            }
+        });
+
+        question_02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView answerbox = getView().findViewById(R.id.textview_answer_2);
+                if (answerbox.getVisibility() == View.GONE) {
+                    answerbox.setVisibility(View.VISIBLE);
+                    question_02.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
+                } else {
+                    answerbox.setVisibility(View.GONE);
+                    question_02.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
+                }
+            }
+        });
+
+        question_03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView answerbox = getView().findViewById(R.id.textview_answer_3);
+                if (answerbox.getVisibility() == View.GONE) {
+                    answerbox.setVisibility(View.VISIBLE);
+                    question_03.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
+                } else {
+                    answerbox.setVisibility(View.GONE);
+                    question_03.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
+                }
+            }
+        });
+
+        question_04.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView answerbox = getView().findViewById(R.id.textview_answer_4);
+                if (answerbox.getVisibility() == View.GONE) {
+                    answerbox.setVisibility(View.VISIBLE);
+                    question_04.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
+                } else {
+                    answerbox.setVisibility(View.GONE);
+                    question_04.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
+                }
+            }
+        });
+
     }
 }

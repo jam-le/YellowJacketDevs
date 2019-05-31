@@ -3,7 +3,6 @@ package com.example.readyourresults.Home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +15,7 @@ import android.widget.Button;
 import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.R;
+import com.example.readyourresults.TestSelect.SelectFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -31,12 +31,10 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Camera", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Fragment helpFragment = new CamFragment();
+                Fragment selectFragment = new SelectFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.content_main, helpFragment)
+                transaction.replace(R.id.content_main, selectFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -45,8 +43,6 @@ public class HomeFragment extends Fragment {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Help", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 Fragment helpFragment = new HelpFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
