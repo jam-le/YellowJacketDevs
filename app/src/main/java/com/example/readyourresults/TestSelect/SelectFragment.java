@@ -1,52 +1,47 @@
-package com.example.readyourresults.Home;
-
+package com.example.readyourresults.TestSelect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-
+import android.support.v4.app.Fragment;
+import android.widget.Spinner;
 
 import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.R;
-import com.example.readyourresults.TestSelect.SelectFragment;
 
-public class HomeFragment extends Fragment {
-
+public class SelectFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_select, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button fab = getView().findViewById(R.id.button_read_my_results);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //Spinner
+        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
+                R.array.test_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        //Scan Results
+        Button scan = getView().findViewById(R.id.scan_button);
+        scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment selectFragment = new SelectFragment();
+                Fragment camFragment = new CamFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.content_main, selectFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        Button help = getView().findViewById(R.id.help_button);
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment helpFragment = new HelpFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.content_main, helpFragment)
+                transaction.replace(R.id.content_main, camFragment)
                         .addToBackStack(null)
                         .commit();
             }

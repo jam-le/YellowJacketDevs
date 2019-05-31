@@ -21,6 +21,12 @@
     <string name="help_question_2_text">How accurate are my results?</string>
     <string name="help_answer_2_text">Link to information brochure.</string>
     <string name="help_question_3_text">What test devices does this app support?</string>
+
+
+    <string-array name="test_array">
+        <item>Insti HIV Test</item>
+    </string-array>
+
     <string name="help_answer_3_text">Currently, only the Insti Rapid test is supported.</string>
 
     <string name="help_question_4_text">Other Frequently Asked Questions</string>
