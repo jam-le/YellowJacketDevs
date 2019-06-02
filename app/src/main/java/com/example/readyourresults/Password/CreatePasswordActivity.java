@@ -2,6 +2,7 @@ package com.example.readyourresults.Password;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.example.readyourresults.R;
 
 public class CreatePasswordActivity extends AppCompatActivity {
 
-    EditText editNewPassword, editRepeatPassword;
+    TextInputLayout editNewPassword, editRepeatPassword;
     Button confirmButton, cancelButton;
 
     @Override
@@ -22,23 +23,25 @@ public class CreatePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_password);
 
-        editNewPassword = (EditText) findViewById(R.id.new_password);
-        editRepeatPassword = (EditText) findViewById(R.id.repeat_password);
+        editNewPassword = (TextInputLayout) findViewById(R.id.new_password);
+        editRepeatPassword = (TextInputLayout) findViewById(R.id.repeat_password);
         confirmButton = (Button) findViewById(R.id.confirm_button);
         cancelButton = (Button) findViewById(R.id.cancel_button);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newPassword = editNewPassword.getText().toString();
-                String repeatPassword = editRepeatPassword.getText().toString();
+                String newPassword = editNewPassword.getEditText().getText().toString().trim();
 
-                if(newPassword.equals("") || repeatPassword.equals("")) {
+                String repeatPassword = editRepeatPassword.getEditText().getText().toString().trim();
+
+                if (newPassword.equals("")) {
                     //there is no password
-                    Toast.makeText(CreatePasswordActivity.this,
-                            "No Password Entered!",
-                            Toast.LENGTH_SHORT)
-                            .show();
+                    editNewPassword.setError("Field Can't be empty");
+                }
+
+                if (repeatPassword.equals("")) {
+                    editRepeatPassword.setError("Field Can't be empty");
                 } else {
                     //save password
                     if(newPassword.equals(repeatPassword)) {
@@ -55,12 +58,10 @@ public class CreatePasswordActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         finish();
+
                     } else {
                         //there is no match for the passwords
-                        Toast.makeText(CreatePasswordActivity.this,
-                                "Passwords don't match",
-                                Toast.LENGTH_SHORT)
-                                .show();
+                        editRepeatPassword.setError("Passwords Don't Match");
                     }
                 }
             }

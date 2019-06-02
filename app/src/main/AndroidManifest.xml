@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Password.CreatePasswordActivity"></activity>
         <activity android:name=".BufferActivity"></activity>
         <activity
             android:name=".MainActivity"
