@@ -1,14 +1,11 @@
 package com.example.readyourresults.MySavedResults;
 
-import android.media.Image;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.example.readyourresults.R;
 
 public class SavedResultsViewHolder extends RecyclerView.ViewHolder {
