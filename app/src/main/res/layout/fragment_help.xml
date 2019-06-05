@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_help"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:id="@+id/fragment_help"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textview_help_title"
@@ -59,7 +59,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:visibility="gone"
-            android:background="@color/cardview_light_background"
+            android:background="@color/colorChild"
             android:text="@string/help_answer_1_text"
             android:padding="10dp"/>
 
@@ -89,7 +89,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:visibility="gone"
-            android:background="@color/cardview_light_background"
+            android:background="@color/colorChild"
             android:text="@string/help_answer_2_text"
             android:padding="10dp"/>
         <Button
@@ -117,7 +117,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:visibility="gone"
-            android:background="@color/cardview_light_background"
+            android:background="@color/colorChild"
             android:text="@string/help_answer_3_text"
             android:padding="10dp"/>
 
@@ -147,11 +147,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:visibility="gone"
-            android:background="@color/cardview_light_background"
+            android:background="@color/colorChild"
             android:text="@string/help_answer_4_text"
             android:padding="10dp"/>
     </LinearLayout>
 
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
