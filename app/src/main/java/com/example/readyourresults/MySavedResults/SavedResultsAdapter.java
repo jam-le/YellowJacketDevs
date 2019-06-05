@@ -1,48 +1,51 @@
 package com.example.readyourresults.MySavedResults;
 
-import android.content.Context;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.example.readyourresults.R;
 
 import java.util.List;
 
-public class SavedResultsAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
+public class SavedResultsAdapter extends RecyclerView.Adapter<SavedResultsViewHolder> {
 
-    LayoutInflater inflater;
+    private List<SavedResultsItem> savedResultsItems;
 
-    public SavedResultsAdapter(Context context, List<ParentObject> parentItemList) {
-        super(context, parentItemList);
-        inflater = LayoutInflater.from(context);
+    public SavedResultsAdapter(List<SavedResultsItem> savedResultsItems) {
+        this.savedResultsItems = savedResultsItems;
     }
 
     @Override
-    public TitleParentViewHolder onCreateParentViewHolder(ViewGroup viewGroup) {
-        View view = inflater.inflate(R.layout.list_saved_results_parent, viewGroup, false);
-        return new TitleParentViewHolder(view);
+    public SavedResultsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.item_saved_result,
+                        parent,
+                        false);
+        return new SavedResultsViewHolder(view);
     }
 
     @Override
-    public TitleChildViewHolder onCreateChildViewHolder(ViewGroup viewGroup) {
-        View view = inflater.inflate(R.layout.list_saved_results_child, viewGroup, false);
-        return new TitleChildViewHolder(view);
+    public void onBindViewHolder(@NonNull SavedResultsViewHolder savedResultsViewHolder, final int position) {
+        final SavedResultsItem savedResultsItem = savedResultsItems.get(position);
+
+        savedResultsViewHolder.bind(savedResultsItem);
+
+        savedResultsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean expanded = savedResultsItem.isExpanded();
+                savedResultsItem.setExpanded(!expanded);
+                notifyItemChanged(position);
+            }
+        });
     }
 
     @Override
-    public void onBindParentViewHolder(TitleParentViewHolder titleParentViewHolder, int i, Object o) {
-        SavedResultsListParent title = (SavedResultsListParent)o;
-        titleParentViewHolder.textView.setText(title.getTitle());
-    }
-
-    @Override
-    public void onBindChildViewHolder(TitleChildViewHolder titleChildViewHolder, int i, Object o) {
-        SavedResultsListChild child = (SavedResultsListChild)o;
-        titleChildViewHolder.testType.setText(child.getTestType());
-        titleChildViewHolder.testOutcome.setText(child.getTestOutcome());
-        titleChildViewHolder.testDate.setText(child.getTestDate());
+    public int getItemCount() {
+        return savedResultsItems == null ? 0 : savedResultsItems.size();
     }
 }

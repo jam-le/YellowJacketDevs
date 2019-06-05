@@ -32,4 +32,8 @@
     <string name="help_question_4_text">Other Frequently Asked Questions</string>
     <string name="help_answer_4_text">https://insti.com/faq/</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dialog_lose_result">Are you sure you want to close your results without saving? You will not be able to view these results again.</string>
+
 </resources>

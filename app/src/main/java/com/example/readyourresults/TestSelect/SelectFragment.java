@@ -1,21 +1,20 @@
 package com.example.readyourresults.TestSelect;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.support.v4.app.Fragment;
 import android.widget.Spinner;
 
+import com.example.readyourresults.Camera.CamActivity;
 import com.example.readyourresults.Camera.CamFragment;
-import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.R;
 
 public class SelectFragment extends Fragment {
@@ -38,12 +37,17 @@ public class SelectFragment extends Fragment {
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Fragment camFragment = new CamFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.content_main, camFragment)
                         .addToBackStack(null)
                         .commit();
+
+                */
+                Intent intent = new Intent(getActivity(), CamActivity.class);
+                startActivity(intent);
             }
         });
     }

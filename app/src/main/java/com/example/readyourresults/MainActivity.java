@@ -1,33 +1,36 @@
 package com.example.readyourresults;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.Help.HelpFragment;
 import com.example.readyourresults.Home.HomeFragment;
-import com.example.readyourresults.MySavedResults.MySavedResultsFragment;
+import com.example.readyourresults.Password.CreatePasswordActivity;
+import com.example.readyourresults.Password.PasswordDialogueFragment;
 import com.example.readyourresults.Settings.SettingsFragment;
 import com.example.readyourresults.TestSelect.SelectFragment;
 
 public class MainActivity extends AppCompatActivity 
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, PasswordDialogueFragment.PasswordDialogueListener {
     private static final String TAG =MainActivity.class.getSimpleName();
 
     Fragment fragment;
     FragmentManager fragmentManager = getSupportFragmentManager();
+    String storedPassword;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +99,10 @@ public class MainActivity extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_saved) {
+            handlePasswordProtection();
             Log.d(TAG,"My Saved Results menu item selected.");
-            fragment = new MySavedResultsFragment();
-            launchFragment(fragmentManager, fragment);
+            //fragment = new MySavedResultsFragment();
+            //launchFragment(fragmentManager, fragment);
         } else if (id == R.id.nav_settings) {
             Log.d(TAG,"Settings menu item selected.");
             fragment = new SettingsFragment();
@@ -116,10 +120,35 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void handlePasswordProtection() {
+        //load password
+        SharedPreferences settings = getSharedPreferences("PREFS", 0 );
+        storedPassword = settings.getString("password", "");
+        if(storedPassword.equals("")) {
+            //if there is no password
+            Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            openPasswordDialog();
+        }
+    }
+
+    public void openPasswordDialog() {
+        PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment();
+        passwordDialogueFragment.show(getSupportFragmentManager(), "password Dialogue");
+    }
+
     public void launchFragment(FragmentManager fragmentManager, Fragment launchFragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_main, launchFragment)
                 .addToBackStack(null)
                 .commit();
     }
+
+    @Override
+    public void applyText(String password) {
+        this.password = password;
+    }
+
 }
