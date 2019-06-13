@@ -2,10 +2,14 @@ package com.example.readyourresults.Camera;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -104,12 +108,19 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        File file = new File(getExternalMediaDirs()[0],
-                                System.currentTimeMillis() + ".jpg");
+                        File directory = new File(getExternalMediaDirs()[0] + "/RYR");
+                        directory.mkdir();
+                        File file = new File(directory, System.currentTimeMillis() + ".jpg");
                         imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                             @Override
                             public void onImageSaved(File file) {
-                                // insert your code here.
+                                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                                Uri contentUri = Uri.fromFile(file);
+                                mediaScanIntent.setData(contentUri);
+                                sendBroadcast(mediaScanIntent);
+
+                                Bitmap bitmapImage = BitmapFactory.decodeFile(file.getAbsolutePath());
+
                                 String msg = "Photo capture succeeded: " + file.getAbsolutePath();
                                 Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
                                 Log.d("CameraXApp", msg);
