@@ -109,15 +109,26 @@ public class HelpFragment extends Fragment {
             }
         });
 
+        final TextView instiFaq = getView().findViewById(R.id.textview_answer_5);
+        instiFaq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment instiFaqFragment = new InstiFaqFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_main, instiFaqFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         question_05.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView answerbox = getView().findViewById(R.id.textview_answer_5);
-                if (answerbox.getVisibility() == View.GONE) {
-                    answerbox.setVisibility(View.VISIBLE);
+                if (instiFaq.getVisibility() == View.GONE) {
+                    instiFaq.setVisibility(View.VISIBLE);
                     question_05.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
                 } else {
-                    answerbox.setVisibility(View.GONE);
+                    instiFaq.setVisibility(View.GONE);
                     question_05.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
                 }
             }
