@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import com.example.readyourresults.BufferActivity;
 import com.example.readyourresults.R;
 
 import java.io.File;
@@ -104,6 +105,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
 
         final ImageCapture imageCapture = new ImageCapture(config);
         Button captureImageButton = overlayView.findViewById(R.id.capture_image_button);
+
         captureImageButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -122,8 +124,17 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                                 Bitmap bitmapImage = BitmapFactory.decodeFile(file.getAbsolutePath());
 
                                 String msg = "Photo capture succeeded: " + file.getAbsolutePath();
-                                Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
                                 Log.d("CameraXApp", msg);
+
+                                // Results processing dialog should go here
+
+
+                                // Create dialog that alerts user when result
+                                // analysis is complete
+                                // double-clicking creates a problem of loading two screens
+                                Intent intent = new Intent(getApplicationContext(), BufferActivity.class);
+                                intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
+                                startActivity(intent);
                             }
                             @Override
                             public void onError(
