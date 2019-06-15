@@ -126,8 +126,15 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                                 String msg = "Photo capture succeeded: " + file.getAbsolutePath();
                                 Log.d("CameraXApp", msg);
 
-                                // Results processing dialog should go here
+                                // TODO: Results processing dialog should go here
 
+                                // TODO: Process Image
+
+                                // TODO: Create conditional code that directs user
+                                // to buffer activity screen only if image processing
+                                // completes successfully
+
+                                // TODO: Africa
 
                                 // Create dialog that alerts user when result
                                 // analysis is complete
