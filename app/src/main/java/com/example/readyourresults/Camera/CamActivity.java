@@ -2,10 +2,14 @@ package com.example.readyourresults.Camera;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +30,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.readyourresults.AnalysisModel;
+import com.example.readyourresults.BufferActivity;
 import com.example.readyourresults.R;
 
 import java.io.File;
@@ -100,19 +107,45 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
 
         final ImageCapture imageCapture = new ImageCapture(config);
         Button captureImageButton = overlayView.findViewById(R.id.capture_image_button);
+
         captureImageButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        File file = new File(getExternalMediaDirs()[0],
-                                System.currentTimeMillis() + ".jpg");
+                        File directory = new File(getExternalMediaDirs()[0] + "/RYR");
+                        directory.mkdir();
+                        File file = new File(directory, System.currentTimeMillis() + ".jpg");
                         imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                             @Override
                             public void onImageSaved(File file) {
-                                // insert your code here.
+                                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                                Uri contentUri = Uri.fromFile(file);
+                                mediaScanIntent.setData(contentUri);
+                                sendBroadcast(mediaScanIntent);
+
+                                Bitmap bitmapImage = BitmapFactory.decodeFile(file.getAbsolutePath());
+
                                 String msg = "Photo capture succeeded: " + file.getAbsolutePath();
-                                Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
                                 Log.d("CameraXApp", msg);
+
+                                // TODO: Results processing dialog should go here
+
+                                // TODO: Process Image
+                                AnalysisModel model = new AnalysisModel(bitmapImage);
+                                String label = model.interpret();
+
+                                // TODO: Create conditional code that directs user
+                                // to buffer activity screen only if image processing
+                                // completes successfully
+
+                                // TODO: Africa
+
+                                // Create dialog that alerts user when result
+                                // analysis is complete
+                                // double-clicking creates a problem of loading two screens
+                                Intent intent = new Intent(getApplicationContext(), BufferActivity.class);
+                                intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
+                                startActivity(intent);
                             }
                             @Override
                             public void onError(
