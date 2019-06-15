@@ -38,6 +38,7 @@ import java.io.File;
 public class CamActivity extends AppCompatActivity implements LifecycleOwner {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[1];
+    private String TAG = "CamActivity";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +75,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
     private void startCamera() {
         // TODO: Implement CameraX operations
         // Create configuration object for the viewfinder use case
+
+        Log.d(TAG, "startCamera() called.");
 
         PreviewConfig previewConfig = new PreviewConfig.Builder()
                 .setTargetAspectRatio(new Rational(1, 1))
@@ -149,6 +152,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                                     String message,
                                     Throwable cause) {
                                 // insert your code here.
+                                Log.e(TAG, "Error occurred in startCamera()");
 
                             }
                         });
@@ -222,7 +226,9 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
             int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
+                viewFinder = findViewById(R.id.view_finder);
                 viewFinder.post(new StartCameraRunnable());
+                overlayView = View.inflate(getApplicationContext(), R.layout.overlay_view, (ViewGroup) viewFinder.getParent());
             } else {
                 Toast.makeText(this,
                         "Permissions not granted by the user.",

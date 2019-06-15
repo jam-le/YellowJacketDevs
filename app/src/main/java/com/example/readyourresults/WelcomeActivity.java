@@ -24,6 +24,6 @@ public class WelcomeActivity extends Activity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
-        },3000);
+        },0);
     }
 }
