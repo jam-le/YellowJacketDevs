@@ -7,6 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Menu -->
     <string name="menu_home">Home</string>
     <string name="menu_interpret">Interpret Results</string>
     <string name="menu_saved">My Saved Results</string>
@@ -25,15 +26,19 @@
 
     <string name="help_question_3_text">How accurate are my results?</string>
     <string name="help_answer_3_text">The INSTI™ HIV-1 Antibody Test is very accurate. However, additional testing is necessary to confirm a preliminary positive result.\n\nFor more detail, you can ask your healthcare provider to give you complete information about the INSTI™ HIV-1 Antibody Test.</string>
+
     <string name="help_question_4_text">What test devices does this app support?</string>
-    <string-array name="test_array">
-        <item>Insti HIV Test</item>
-    </string-array>
     <string name="help_answer_4_text">Currently, only the Insti Rapid test is supported.</string>
 
     <string name="help_question_5_text">Other Frequently Asked Questions</string>
     <string name="help_answer_5_text"><a href='https://insti.com/faq/'>Official Insti FAQ</a></string>
 
+    <!-- Test Selection Screen -->
+    <string-array name="test_array">
+        <item>Insti HIV Test</item>
+    </string-array>
+
+    <!-- Dialogs -->
     <string name="yes">Yes</string>
     <string name="view_my_results_now">View My Results Now</string>
     <string name="save_my_results_for_later">Save My Results for Later</string>
