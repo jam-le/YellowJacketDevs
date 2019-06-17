@@ -131,7 +131,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                                 // TODO: Results processing dialog should go here
 
                                 // TODO: Process Image
-                                AnalysisModel model = new AnalysisModel(bitmapImage);
+                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext());
                                 String label = model.interpret();
 
                                 // TODO: Create conditional code that directs user

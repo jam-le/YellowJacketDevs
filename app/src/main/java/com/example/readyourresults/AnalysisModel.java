@@ -1,5 +1,6 @@
 package com.example.readyourresults;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
@@ -22,10 +23,11 @@ import java.util.List;
 
 public class AnalysisModel {
     Bitmap bitmapImage;
+    private String lable;
 
-    public AnalysisModel(Bitmap btm) {
+    public AnalysisModel(Bitmap btm, Context con) {
         bitmapImage = btm;
-        FirebaseApp.initializeApp(WelcomeActivity.getAppContext());
+        FirebaseApp.initializeApp(con);
         FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("app.assets.model")
                 .setAssetFilePath("manifest.json")
                 .build();
@@ -50,11 +52,18 @@ public class AnalysisModel {
                         @Override
                         public void onSuccess(List<FirebaseVisionImageLabel> labels) {
                             // Task completed successfully
+                            float max = 0f;
+                            String maxLable = "";
                             for (FirebaseVisionImageLabel label: labels) {
                                 String text = label.getText();
                                 float confidence = label.getConfidence();
                                 Log.d("CameraXApp", text + ": " + confidence);
+                                if (confidence > max) {
+                                    max = confidence;
+                                    maxLable = lable;
+                                }
                             }
+                            setLable(maxLable);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -67,6 +76,12 @@ public class AnalysisModel {
         } catch (FirebaseMLException e) {
             Log.d("CameraXApp", "FirebaseMLException during getOnDeviceAutoMLImageLabeler()");
         }
-        return null;
+        return this.getLable();
+    }
+    public String getLable() {
+        return this.lable;
+    }
+    private void setLable(String l) {
+        this.lable = l;
     }
 }
