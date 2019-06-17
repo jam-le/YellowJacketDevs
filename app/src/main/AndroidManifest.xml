@@ -34,7 +34,7 @@
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".BufferActivity" />
-        <activity android:name=".WelcomeActivity" />
+        <!--<activity android:name=".WelcomeActivity" />-->
         <!--<activity-->
             <!--android:name=".MainActivity"-->
             <!--android:label="@string/app_name"-->
