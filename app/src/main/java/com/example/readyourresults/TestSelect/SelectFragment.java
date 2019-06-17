@@ -1,4 +1,5 @@
 package com.example.readyourresults.TestSelect;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -6,9 +7,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -16,21 +20,52 @@ import android.widget.Spinner;
 import com.example.readyourresults.Camera.CamActivity;
 import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.R;
+import com.github.barteksc.pdfviewer.PDFView;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SelectFragment extends Fragment {
+    PDFView selectPdfView;
+    View v;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_select, container, false);
     }
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         //Spinner
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
                 R.array.test_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        v = view;
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                // Set Brochure PDF
+                selectPdfView = v.findViewById(R.id.select_pdf_view);
+                String selectedItem = parentView.getItemAtPosition(position).toString();
+
+                if (selectedItem.equals(getResources().getStringArray(R.array.test_array)[0])) {
+                    selectPdfView.fromAsset("InstiProductInsert.pdf").load();
+                } else {
+                    selectPdfView.fromAsset("SubjectInformationBrochure.pdf").load();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+
 
         //Scan Results
         Button scan = getView().findViewById(R.id.scan_button);
