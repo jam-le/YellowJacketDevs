@@ -47,6 +47,7 @@ public class AnalysisModel {
         try {
             FirebaseVisionImageLabeler labeler =
                     FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(labelerOptions);
+            Log.d("CameraXApp", "Okay");
             labeler.processImage(image)
                     .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                         @Override
@@ -54,13 +55,13 @@ public class AnalysisModel {
                             // Task completed successfully
                             float max = 0f;
                             String maxLable = "";
-                            for (FirebaseVisionImageLabel label: labels) {
-                                String text = label.getText();
-                                float confidence = label.getConfidence();
+                            for (FirebaseVisionImageLabel lab: labels) {
+                                String text = lab.getText();
+                                float confidence = lab.getConfidence();
                                 Log.d("CameraXApp", text + ": " + confidence);
                                 if (confidence > max) {
                                     max = confidence;
-                                    maxLable = lable;
+                                    maxLable = lab.getText();
                                 }
                             }
                             setLable(maxLable);
