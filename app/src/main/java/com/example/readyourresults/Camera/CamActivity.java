@@ -30,6 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
 import com.example.readyourresults.R;
 
@@ -132,6 +134,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                                 // TODO: Results processing dialog should go here
 
                                 // TODO: Process Image
+                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext());
+                                String label = model.interpret();
 
                                 // TODO: Create conditional code that directs user
                                 // to buffer activity screen only if image processing
