@@ -18,8 +18,9 @@
         android:textSize="45sp"
         app:layout_constraintBottom_toTopOf="@+id/askresults"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/askresults"
@@ -40,13 +41,11 @@
 
     <LinearLayout
         android:id="@+id/results_button_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="246dp"
+        android:layout_height="238dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,30 +56,36 @@
             android:id="@+id/yes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#1C8315"
-            android:text="@string/view_my_results_now"
-            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corners_button"
+            android:backgroundTint="@color/colorAccent"
             android:padding="20dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:text="@string/view_my_results_now"
+            android:textColor="#FFFFFF" />
+
         <Button
             android:id="@+id/saveresult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#152583"
-            android:text="@string/save_my_results_for_later"
-            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corners_button"
+            android:backgroundTint="@color/colorAccent"
             android:padding="20dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"
+            android:text="@string/save_my_results_for_later"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/discard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners_button"
             android:backgroundTint="#831515"
-            android:text=" Discard Results"
-            android:textColor="#FFFFFF"
             android:padding="20dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"
+            android:text=" Discard Results"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
