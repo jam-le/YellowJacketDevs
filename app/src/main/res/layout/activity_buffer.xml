@@ -9,11 +9,25 @@
     android:layout_marginTop="100dp"
     android:layout_marginBottom="150dp">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ANALYSIS COMPLETE"
+        android:text="ANALYZING"
         android:textAlignment="center"
         android:textSize="45sp"
         app:layout_constraintBottom_toTopOf="@+id/askresults"
@@ -27,6 +41,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Would you like to see your results now?"
+        android:visibility="invisible"
         android:textSize="20sp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -48,6 +63,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,4 +99,5 @@
             android:paddingRight="10dp" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
