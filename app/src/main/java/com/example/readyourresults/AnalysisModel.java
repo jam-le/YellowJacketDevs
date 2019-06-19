@@ -22,7 +22,7 @@ import java.util.List;
 
 public class AnalysisModel {
     Bitmap bitmapImage;
-    private String lable;
+    private String label;
 
     public AnalysisModel(Bitmap btm, Context con) {
         bitmapImage = btm;
@@ -65,17 +65,17 @@ public class AnalysisModel {
                             Log.d("Labels: ",labels.toString());
                             // Task completed successfully
                             float max = 0f;
-                            String maxLable = "";
+                            String maxLabel = "";
                             for (FirebaseVisionImageLabel lab: labels) {
                                 String text = lab.getText();
                                 float confidence = lab.getConfidence();
                                 Log.d("CameraXApp", text + ": " + confidence);
                                 if (confidence > max) {
                                     max = confidence;
-                                    maxLable = lab.getText();
+                                    maxLabel = lab.getText();
                                 }
                             }
-                            setLable(maxLable);
+                            setLabel(maxLabel);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -89,13 +89,13 @@ public class AnalysisModel {
             Log.d("CameraXApp", "FirebaseMLException during getOnDeviceAutoMLImageLabeler()");
         }
 
-        Log.d("Label", ""+this.lable);
-        return this.getLable();
+        Log.d("Label", ""+this.label);
+        return this.getLabel();
     }
-    public String getLable() {
-        return this.lable;
+    public String getLabel() {
+        return this.label;
     }
-    private void setLable(String l) {
-        this.lable = l;
+    private void setLabel(String l) {
+        this.label = l;
     }
 }
