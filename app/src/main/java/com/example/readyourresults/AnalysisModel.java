@@ -3,7 +3,6 @@ package com.example.readyourresults;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -28,10 +27,18 @@ public class AnalysisModel {
     public AnalysisModel(Bitmap btm, Context con) {
         bitmapImage = btm;
         FirebaseApp.initializeApp(con);
-        FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("app.assets.model")
-                .setAssetFilePath("manifest.json")
+        FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("my_local_model")
+                .setAssetFilePath("model/manifest.json")
                 .build();
         FirebaseModelManager.getInstance().registerLocalModel(localModel);
+
+
+        //Testing different files passed into .setAssetFilePath
+        //FirebaseLocalModel localModel2 = new FirebaseLocalModel.Builder("my_local_model2")
+        //        .setAssetFilePath("model/model.tflite")
+        //        .build();
+        //Log.d("FirebaseLocalModels", localModel + " " + localModel2 );
+        // the local models do not appear to be null
     }
 
     public String interpret() {
@@ -47,11 +54,15 @@ public class AnalysisModel {
         try {
             FirebaseVisionImageLabeler labeler =
                     FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(labelerOptions);
-            Log.d("CameraXApp", "Okay");
+            Log.d("CameraXApp", "Set labeler =" + labeler);
+
             labeler.processImage(image)
                     .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                         @Override
                         public void onSuccess(List<FirebaseVisionImageLabel> labels) {
+                            // Jamie: Somehow labels array is empty. Not sure if this is how
+                            // it is supposed to be.
+                            Log.d("Labels: ",labels.toString());
                             // Task completed successfully
                             float max = 0f;
                             String maxLable = "";
@@ -71,12 +82,14 @@ public class AnalysisModel {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             // Task failed with an exception
-                            Log.d("CameraXApp", "hello"+e.getMessage());
+                            Log.d("CameraXApp", "hello "+ e.getMessage());
                         }
                     });
         } catch (FirebaseMLException e) {
             Log.d("CameraXApp", "FirebaseMLException during getOnDeviceAutoMLImageLabeler()");
         }
+
+        Log.d("Label", ""+this.lable);
         return this.getLable();
     }
     public String getLable() {
