@@ -7,6 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Menu -->
     <string name="menu_home">Home</string>
     <string name="menu_interpret">Interpret Results</string>
     <string name="menu_saved">My Saved Results</string>
@@ -15,24 +16,32 @@
     <!-- Help Screen -->
     <string name="menu_help">Help</string>
     <string name="help_button_text">Help</string>
-    <string name="help_question_1_text">How do I use this app?</string>
-    <string name="help_answer_1_text">1. Tap the \"Interpret Results\" button on the Home screen or side navigation drawer.\n\n2. Select the test device that you used.\n\n3. Point your phone\'s camera at the device, fitting the device between the guidelines that appear on screen.\n\n4. Snap a picture and wait for your results to process.\n\n\5. Once your results are ready, you can proceed to view your results.</string>
 
-    <string name="help_question_2_text">How accurate are my results?</string>
-    <string name="help_answer_2_text">Link to information brochure.</string>
-    <string name="help_question_3_text">What test devices does this app support?</string>
+    <string name="help_question_1_text">What should I know before using this app?</string>
+    <string name="help_answer_1_text">Please read this informational brochure in its entirety before administering the HIV-1 Antibody Test.\n</string>
+    <string name="info_brochure_link"><a href='https://www.fda.gov/media/79744/download'>View Informational Brochure</a>\n</string>
 
+    <string name="help_question_2_text">How do I use this app?</string>
+    <string name="help_answer_2_text">1. Tap the \"Interpret Results\" button on the Home screen or side navigation drawer.\n\n2. Select the test device that you used.\n\n3. Point your phone\'s camera at the device, fitting the device between the guidelines that appear on screen.\n\n4. Snap a picture and wait for your results to process.\n\n\5. Once your results are ready, you can proceed to view your results.</string>
 
+    <string name="help_question_3_text">How accurate are my results?</string>
+    <string name="help_answer_3_text">The INSTI™ HIV-1 Antibody Test is very accurate. However, additional testing is necessary to confirm a preliminary positive result.\n\nFor more detail, you can ask your healthcare provider to give you complete information about the INSTI™ HIV-1 Antibody Test.</string>
+
+    <string name="help_question_4_text">What test devices does this app support?</string>
+    <string name="help_answer_4_text">Currently, only the Insti Rapid test is supported.</string>
+
+    <string name="help_question_5_text">Other Frequently Asked Questions</string>
+    <string name="help_answer_5_text"><a href='https://insti.com/faq/'>Official Insti FAQ</a></string>
+
+    <!-- Test Selection Screen -->
     <string-array name="test_array">
         <item>Insti HIV Test</item>
     </string-array>
 
-    <string name="help_answer_3_text">Currently, only the Insti Rapid test is supported.</string>
-
-    <string name="help_question_4_text">Other Frequently Asked Questions</string>
-    <string name="help_answer_4_text">https://insti.com/faq/</string>
-
+    <!-- Dialogs -->
     <string name="yes">Yes</string>
+    <string name="view_my_results_now">View My Results Now</string>
+    <string name="save_my_results_for_later">Save My Results for Later</string>
     <string name="no">No</string>
     <string name="dialog_lose_result">Are you sure you want to close your results without saving? You will not be able to view these results again.</string>
 

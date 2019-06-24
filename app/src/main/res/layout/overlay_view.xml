@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/overlay_view"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/overlay_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="top|center"
+        android:text="Center the test between the guides below"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <view
+        android:id="@+id/guiding_overlay_marks"
+        android:layout_width="270dp"
+        android:layout_height="260dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/overlay_text"
+        app:layout_constraintBottom_toTopOf="@id/button_holder"
+        class="com.example.readyourresults.Camera.CamActivity$CustomOverlayView"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/button_holder"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#000000"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:focusable="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false">
+
+        <!-- Capture Image Button Goes Here -->
+        <Button
+            android:id="@+id/capture_image_button"
+            android:focusable="false"
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:background="@drawable/round_button"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

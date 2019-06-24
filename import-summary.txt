@@ -7,7 +7,10 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
+<<<<<<< HEAD
 * java.iml
+=======
+>>>>>>> master
 * javadoc\
 * javadoc\allclasses-frame.html
 * javadoc\allclasses-noframe.html

@@ -4,23 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BufferActivity">
+    tools:context=".BufferActivity"
+    android:id="@+id/activity_buffer_layout"
+    android:layout_marginTop="100dp"
+    android:layout_marginBottom="150dp">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/summary"
-        android:layout_width="338dp"
-        android:layout_height="92dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="ANALYSIS COMPLETE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ANALYZING"
         android:textAlignment="center"
-        android:textSize="36sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toTopOf="@+id/askresults"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,30 +40,29 @@
         android:id="@+id/askresults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Would you like to see your results now?"
+        android:visibility="invisible"
+        android:textSize="20sp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Would you like to see your results?"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.441" />
+        app:layout_constraintBottom_toTopOf="@id/results_button_container"
+        app:layout_constraintEnd_toEndOf="@id/summary"
+        app:layout_constraintStart_toStartOf="@id/summary"
+        app:layout_constraintTop_toBottomOf="@id/summary"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/results_button_container"
+        android:layout_width="246dp"
+        android:layout_height="238dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,25 +72,37 @@
             android:id="@+id/yes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#1C8315"
-            android:text="@android:string/yes"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corners_button"
+            android:backgroundTint="@color/colorAccent"
+            android:padding="20dp"
+            android:paddingRight="10dp"
+            android:text="@string/view_my_results_now"
             android:textColor="#FFFFFF" />
+
         <Button
             android:id="@+id/saveresult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#152583"
-            android:text="Save Results For LAter"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corners_button"
+            android:backgroundTint="@color/colorAccent"
+            android:padding="20dp"
+            android:paddingRight="10dp"
+            android:text="@string/save_my_results_for_later"
             android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/discard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners_button"
             android:backgroundTint="#831515"
+            android:padding="20dp"
+            android:paddingRight="10dp"
             android:text=" Discard Results"
             android:textColor="#FFFFFF" />
 
-
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
