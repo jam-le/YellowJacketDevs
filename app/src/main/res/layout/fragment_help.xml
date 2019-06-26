@@ -192,6 +192,36 @@
             android:background="@color/colorChild"
             android:text="@string/help_answer_5_text"
             android:padding="10dp"/>
+
+        <Button
+            android:id="@+id/button_question_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="#E7E7E7"
+            android:drawableRight="@drawable/ic_help_question_arrow"
+            android:padding="20dp"
+            android:paddingRight="10dp"
+            android:text="@string/help_question_6_text"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_question_2"
+            app:layout_constraintVertical_bias="0.03"/>
+
+        <TextView
+            android:id="@+id/textview_answer_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:background="@color/colorChild"
+            android:text="@string/help_answer_6_text"
+            android:padding="10dp"/>
     </LinearLayout>
 
     </ScrollView>
