@@ -26,6 +26,7 @@ public class CloseResultDialogFragment extends DialogFragment {
                 })
                 .setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        //should go back to camera view...
 
                         Fragment homeFragment = new HomeFragment();
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

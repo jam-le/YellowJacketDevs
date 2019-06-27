@@ -10,11 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class NewResultFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (container != null) {
+            container.removeAllViews();
+        }
         return inflater.inflate(R.layout.fragment_new_result, container, false);
     }
 
@@ -28,9 +32,13 @@ public class NewResultFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 CloseResultDialogFragment newFragment = new CloseResultDialogFragment();
                 newFragment.show(fragmentManager, "closeDialog");
-
-
             }
         });
+
+        //show confidences
+        String labels = getArguments().getString("CONFIDENCES");
+        TextView confidences = getActivity().findViewById(R.id.confidences_text);
+
+        confidences.setText(labels);
     }
 }

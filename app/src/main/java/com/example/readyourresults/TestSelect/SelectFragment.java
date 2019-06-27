@@ -1,14 +1,10 @@
 package com.example.readyourresults.TestSelect;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +14,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.readyourresults.Camera.CamActivity;
-import com.example.readyourresults.Camera.CamFragment;
 import com.example.readyourresults.R;
 import com.github.barteksc.pdfviewer.PDFView;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SelectFragment extends Fragment {
     PDFView selectPdfView;
