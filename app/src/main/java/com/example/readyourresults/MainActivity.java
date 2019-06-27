@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity
             fragment = new SelectFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.content_main, fragment)
-                    .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_saved) {
             handlePasswordProtection();

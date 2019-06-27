@@ -1,6 +1,7 @@
 package com.example.readyourresults.Camera;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,13 +41,29 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
-public class CamActivity extends AppCompatActivity implements LifecycleOwner {
+public class CamActivity extends AppCompatActivity implements LifecycleOwner, ResultsInterpreted {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[1];
     private String TAG = "CamActivity";
     DatabaseHelper database;
     String testName;
+    Activity thisActivity = this;
+    Intent intent;
+
+    public void resultsInterpreted(HashMap<String, Float> labelConfidences) {
+        String formattedLabels;
+        if (labelConfidences.isEmpty()) {
+            formattedLabels = "The analysis details could not be found. Common causes of this error include an improperly administered test or an invalid image.";
+        } else {
+            formattedLabels = formatLabels(labelConfidences);
+        }
+        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+        startActivity(intent);
+        Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,24 +159,23 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
 
                                 // TODO: Results processing dialog should go here
 
-                                // TODO: Process Image
-                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext());
-                                String label = model.interpret();
 
                                 // TODO: Create conditional code that directs user
                                 // to buffer activity screen only if image processing
                                 // completes successfully
 
-                                // TODO: Africa
-
                                 // Create dialog that alerts user when result
                                 // analysis is complete
                                 // double-clicking creates a problem of loading two screens
-                                Intent intent = new Intent(getApplicationContext(), BufferActivity.class);
+                                intent = new Intent(getApplicationContext(), BufferActivity.class);
                                 intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
                                 intent.putExtra("Test Type", testName);
                                 intent.putExtra("Image Path", ""+file.getAbsoluteFile());
                                 startActivity(intent);
+
+                                // TODO: Process Image
+                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(), (ResultsInterpreted) thisActivity);
+                                model.interpret();
                             }
                             @Override
                             public void onError(
@@ -181,6 +197,12 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
         CameraX.bindToLifecycle(this, preview, imageCapture);
 
 
+    }
+
+    private String formatLabels(HashMap<String, Float> labelConfidences) {
+        String formattedString = labelConfidences.toString();
+        Log.d("CamActivity: ", formattedString);
+        return formattedString;
     }
 
     public static class CustomOverlayView extends View {

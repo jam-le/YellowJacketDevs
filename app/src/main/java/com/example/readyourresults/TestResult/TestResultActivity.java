@@ -30,7 +30,7 @@ public class TestResultActivity extends AppCompatActivity
     private static final String TAG =TestResultActivity.class.getSimpleName();
 
     Fragment fragment;
-    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentManager fragmentManager;
     String storedPassword;
     String password;
 
@@ -43,9 +43,13 @@ public class TestResultActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TestResultFragment testResultFragment = new TestResultFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("CONFIDENCES", getIntent().getStringExtra("RESULTS_AND_CONFIDENCES"));
+        NewResultFragment newResultFragment = new NewResultFragment();
+        newResultFragment.setArguments(bundle);
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.content_main, testResultFragment)
+        transaction.add(R.id.content_main, newResultFragment)
                 .commit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
