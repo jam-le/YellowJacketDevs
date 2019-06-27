@@ -27,6 +27,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class SelectFragment extends Fragment {
     PDFView selectPdfView;
     View v;
+    String testType;
 
     @Nullable
     @Override
@@ -50,6 +51,7 @@ public class SelectFragment extends Fragment {
                 // Set Brochure PDF
                 selectPdfView = v.findViewById(R.id.select_pdf_view);
                 String selectedItem = parentView.getItemAtPosition(position).toString();
+                testType = selectedItem;
 
                 if (selectedItem.equals(getResources().getStringArray(R.array.test_array)[0])) {
                     selectPdfView.fromAsset("InstiProductInsert.pdf").load();
@@ -64,7 +66,6 @@ public class SelectFragment extends Fragment {
             }
 
         });
-
 
 
         //Scan Results
@@ -82,6 +83,7 @@ public class SelectFragment extends Fragment {
 
                 */
                 Intent intent = new Intent(getActivity(), CamActivity.class);
+                intent.putExtra("Test Type", testType);
                 startActivity(intent);
             }
         });
