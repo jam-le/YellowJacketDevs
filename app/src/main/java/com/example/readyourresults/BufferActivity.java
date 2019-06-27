@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -14,9 +17,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.os.AsyncTask;
 
+import com.example.readyourresults.TestResult.TestResultActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 public class BufferActivity extends AppCompatActivity {
+    Button viewResultsButton;
+    Fragment fragment;
+    FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,7 @@ public class BufferActivity extends AppCompatActivity {
                 final LinearLayout results_button_container = (LinearLayout) findViewById(R.id.results_button_container);
                 results_button_container.setVisibility(View.VISIBLE);
             }
+
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
@@ -48,32 +56,21 @@ public class BufferActivity extends AppCompatActivity {
                 return null;
             }
         }.execute();
-
+        final String testType = getIntent().getStringExtra("Test Type");
+        final String imagePath = getIntent().getStringExtra("Image Path");
         String msg = getIntent().getStringExtra("IMAGE_SUCCESSFULLY_CAPTURED");
         Snackbar.make(findViewById(R.id.activity_buffer_layout), msg, Snackbar.LENGTH_SHORT).show();
-
-        Button viewMyResultsNow = findViewById(R.id.yes);
-        viewMyResultsNow.setOnClickListener(new View.OnClickListener() {
+        viewResultsButton = findViewById(R.id.view_result);
+        viewResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // Go to results page
-
-                Bundle bundle = new Bundle();
-                bundle.putString("CONFIDENCES", getIntent().getStringExtra("RESULTS_AND_CONFIDENCES"));
-                Fragment newResultFragment = new NewResultFragment();
-                newResultFragment.setArguments(bundle);
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.activity_buffer_layout, newResultFragment)
-                        .commit();
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestResultActivity.class);
+                intent.putExtra("Test Type", testType);
+                intent.putExtra("Image Path", imagePath);
+                intent.putExtra("RESULTS_AND_CONFIDENCES",
+                        getIntent().getStringExtra("RESULTS_AND_CONFIDENCES"));
+                startActivity(intent);
             }
         });
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        //need to fix the back press behavior for this activity
-        super.onBackPressed();
     }
 }

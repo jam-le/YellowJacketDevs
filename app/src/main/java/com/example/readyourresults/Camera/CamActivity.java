@@ -34,15 +34,21 @@ import android.widget.Toast;
 
 import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
+import com.example.readyourresults.Database.DatabaseHelper;
 import com.example.readyourresults.R;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class CamActivity extends AppCompatActivity implements LifecycleOwner, ResultsInterpreted {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[1];
     private String TAG = "CamActivity";
+    DatabaseHelper database;
+    String testName;
     Activity thisActivity = this;
     Intent intent;
 
@@ -74,6 +80,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
             ActivityCompat.requestPermissions(
                     this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
+        getIntent().getSerializableExtra("Test Name");
+
 
         // Every time the provided texture view changes, recompute layout
         //viewFinder.addOnLayoutChangeListener {
@@ -126,8 +134,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                         .build();
 
         final ImageCapture imageCapture = new ImageCapture(config);
+        testName = getIntent().getStringExtra("Test Type");
         Button captureImageButton = overlayView.findViewById(R.id.capture_image_button);
-
         captureImageButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -135,6 +143,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                         File directory = new File(getExternalMediaDirs()[0] + "/RYR");
                         directory.mkdir();
                         File file = new File(directory, System.currentTimeMillis() + ".jpg");
+
                         imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                             @Override
                             public void onImageSaved(File file) {
@@ -160,6 +169,9 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                                 // double-clicking creates a problem of loading two screens
                                 intent = new Intent(getApplicationContext(), BufferActivity.class);
                                 intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
+                                intent.putExtra("Test Type", testName);
+                                intent.putExtra("Image Path", ""+file.getAbsoluteFile());
+                                startActivity(intent);
 
                                 // TODO: Process Image
                                 AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(), (ResultsInterpreted) thisActivity);

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.readyourresults.NewResultFragment;
+import com.example.readyourresults.TestResult.NewResultFragment;
 import com.example.readyourresults.R;
 
 public class CamFragment extends Fragment {
