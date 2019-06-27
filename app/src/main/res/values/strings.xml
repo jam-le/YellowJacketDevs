@@ -18,7 +18,7 @@
     <string name="help_button_text">Help</string>
 
     <string name="help_question_1_text">What should I know before using this app?</string>
-    <string name="help_answer_1_text">Please read this informational brochure in its entirety before administering the HIV-1 Antibody Test.\n</string>
+    <string name="help_answer_1_text">Please read this informational brochure in its entirety before administering the INSTI™ HIV-1 Antibody Test.\n</string>
     <string name="info_brochure_link"><a href='https://www.fda.gov/media/79744/download'>View Informational Brochure</a>\n</string>
 
     <string name="help_question_2_text">How do I use this app?</string>
@@ -28,14 +28,17 @@
     <string name="help_answer_3_text">The INSTI™ HIV-1 Antibody Test is very accurate. However, additional testing is necessary to confirm a preliminary positive result.\n\nFor more detail, you can ask your healthcare provider to give you complete information about the INSTI™ HIV-1 Antibody Test.</string>
 
     <string name="help_question_4_text">What test devices does this app support?</string>
-    <string name="help_answer_4_text">Currently, only the Insti Rapid test is supported.</string>
+    <string name="help_answer_4_text">Currently, only the INSTI™ HIV-1 Antibody Test is supported.</string>
 
-    <string name="help_question_5_text">Other Frequently Asked Questions</string>
-    <string name="help_answer_5_text"><a href='https://insti.com/faq/'>Official Insti FAQ</a></string>
+    <string name="help_question_5_text">How do I use the INSTI™ HIV-1 Antibody Test?</string>
+    <string name="help_answer_5_text"><a href='https://youtu.be/zv-Nbm5Vjl8'>INSTI™ HIV-1 Antibody Test Video Tutorial</a></string>
+
+    <string name="help_question_6_text">Other Frequently Asked Questions</string>
+    <string name="help_answer_6_text"><a href='https://insti.com/faq/'>Official INSTI™ FAQ</a></string>
 
     <!-- Test Selection Screen -->
     <string-array name="test_array">
-        <item>Insti HIV Test</item>
+        <item>INSTI™ HIV Test</item>
     </string-array>
 
     <!-- Dialogs -->
@@ -44,5 +47,8 @@
     <string name="save_my_results_for_later">Save My Results for Later</string>
     <string name="no">No</string>
     <string name="dialog_lose_result">Are you sure you want to close your results without saving? You will not be able to view these results again.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
