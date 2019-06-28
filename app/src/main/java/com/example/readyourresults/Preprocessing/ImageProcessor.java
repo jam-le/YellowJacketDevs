@@ -2,6 +2,7 @@ package com.example.readyourresults.Preprocessing;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,6 +11,7 @@ import android.util.Log;
 import com.example.readyourresults.R;
 
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
 import org.opencv.core.Point;
@@ -39,6 +41,7 @@ public class ImageProcessor {
             Log.d(TAG,"oops");
         }
     }
+    private Bitmap btm;
     String path;
     public ImageProcessor(File img) {
         //OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_11, this, baseLoaderCallback );
@@ -90,7 +93,7 @@ public class ImageProcessor {
 
         Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
         equalizeHist(gray,src);
-        Mat comb = gray;
+        //Mat comb = gray;
         //add(gray,src,comb);
         //Canny(src, src, 70, 95, false);
 
@@ -103,10 +106,14 @@ public class ImageProcessor {
 //            path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".jpg")) + ":" +i+ "edge.bmp";
 //            imwrite(path, src);
 //        }
-
+        btm = BitmapFactory.decodeFile(path);
+        Utils.matToBitmap(src, btm);
     }
     public String toString() {
         return path;
     }
 
+    public Bitmap getBtm() {
+        return btm;
+    }
 }

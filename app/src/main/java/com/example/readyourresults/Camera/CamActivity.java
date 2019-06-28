@@ -136,6 +136,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
 
                                 // TODO: Process Image
                                 ImageProcessor imp = new ImageProcessor(file);
+                                Bitmap processedImage = imp.getBtm();
                                 Toast.makeText(CamActivity.this, imp.toString(),
                                         Toast.LENGTH_LONG).show();
                                 AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext());
