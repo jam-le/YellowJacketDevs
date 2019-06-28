@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -14,29 +15,27 @@
         android:layout_marginTop="88dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.064"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintVertical_bias="0.112"
+        app:srcCompat="@drawable/ic_logo_with_text" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="236dp"
         android:layout_height="233dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.358">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/button_read_my_results"
@@ -77,23 +76,5 @@
             app:layout_constraintTop_toBottomOf="@+id/button_read_my_results" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="273dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Read Your Results"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.395" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
