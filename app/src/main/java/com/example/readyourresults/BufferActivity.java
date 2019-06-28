@@ -48,6 +48,6 @@ public class BufferActivity extends AppCompatActivity {
         }.execute();
 
         String msg = getIntent().getStringExtra("IMAGE_SUCCESSFULLY_CAPTURED");
-        Snackbar.make(findViewById(R.id.activity_buffer_layout), msg, Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(findViewById(R.id.activity_buffer_layout), msg, Snackbar.LENGTH_SHORT).show();
     }
 }

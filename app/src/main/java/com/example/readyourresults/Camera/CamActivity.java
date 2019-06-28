@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
+import com.example.readyourresults.Preprocessing.ImageProcessor;
 import com.example.readyourresults.R;
 
 import java.io.File;
@@ -134,6 +135,9 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                                 // TODO: Results processing dialog should go here
 
                                 // TODO: Process Image
+                                ImageProcessor imp = new ImageProcessor(file);
+                                Toast.makeText(CamActivity.this, imp.toString(),
+                                        Toast.LENGTH_LONG).show();
                                 AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext());
                                 String label = model.interpret();
 
