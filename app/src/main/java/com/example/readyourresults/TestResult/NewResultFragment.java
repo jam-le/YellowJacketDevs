@@ -38,6 +38,7 @@ public class NewResultFragment extends Fragment {
     Bitmap bitmapImage;
     TextView testType;
     TextView testOutcome;
+    TextView highestConfidenceLabel;
     TextView testDate;
     Button saveButton;
     Button closeButton;
@@ -61,6 +62,7 @@ public class NewResultFragment extends Fragment {
         //testType = getView().findViewById(R.id.testType);
         testOutcome = getView().findViewById(R.id.test_result_outcome_text);
         //testDate = getView().findViewById(R.id.testDate);
+        highestConfidenceLabel = getView().findViewById(R.id.test_result_outcome_text);
         saveButton = getView().findViewById(R.id.save_result_btn);
         closeButton = getView().findViewById(R.id.close_result_btn);
 
@@ -78,6 +80,26 @@ public class NewResultFragment extends Fragment {
         }
 
         final String testTypeText = getActivity().getIntent().getStringExtra("Test Type");
+
+        final String mostLikelyTestOutcome = getActivity().getIntent().getStringExtra("MAXLABEL");
+        final float highestConfidence = getActivity().getIntent().getFloatExtra("MAXCONFIDENCE", 0);
+        Log.d("newResultFrag", "most likely outcome: " + mostLikelyTestOutcome + "; highestConfidence: " + highestConfidence);
+
+        String additionalConfidencesInfo = "";
+        if (highestConfidence >= .8) {
+            if (mostLikelyTestOutcome.equals("reactive")) {
+                highestConfidenceLabel.setText("Positive");
+            } else if (mostLikelyTestOutcome.equals("non-reactive") || mostLikelyTestOutcome.equals("nonreactive")) {
+                highestConfidenceLabel.setText("Negative");
+            } else if (mostLikelyTestOutcome.equals("inconclusive")) {
+                highestConfidenceLabel.setText("Inconclusive");
+            } else if (mostLikelyTestOutcome.equals("invalid")) {
+                highestConfidenceLabel.setText("Invalid");
+            }
+        }else {
+            highestConfidenceLabel.setText("Inconclusive");
+            additionalConfidencesInfo = "\nThe confidence levels are not high enough to generate a strong conclusion.";
+        }
 
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         date = new Date();
@@ -107,8 +129,7 @@ public class NewResultFragment extends Fragment {
         //show confidences
         String labels = getArguments().getString("CONFIDENCES");
         TextView confidences = getActivity().findViewById(R.id.confidences_text);
-
-        confidences.setText(labels);
+        confidences.setText(labels + additionalConfidencesInfo);
     }
 
     @Override

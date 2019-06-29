@@ -27,6 +27,7 @@ import java.util.List;
 public class AnalysisModel {
     Bitmap bitmapImage;
     private String label;
+    private float maxConfidence;
     private HashMap<String, Float> labelConfidences = new HashMap<>();
 
     private ResultsInterpreted resultsInterpreted;
@@ -82,12 +83,13 @@ public class AnalysisModel {
                                 if (confidence > max) {
                                     max = confidence;
                                     maxLabel = lab.getText();
+                                    setLabel(maxLabel);
+                                    setMaxConfidence(max);
                                 }
                             }
-                            Log.d("AnalysisModel: ", labelConfidences.toString());
-                            setLabel(maxLabel);
+                            Log.d("AnalysisModel: ", labelConfidences.toString() + "max label:" + maxLabel);
 
-                            resultsInterpreted.resultsInterpreted(labelConfidences);
+                            resultsInterpreted.resultsInterpreted(labelConfidences, maxLabel, maxConfidence);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -109,5 +111,9 @@ public class AnalysisModel {
     }
     private void setLabel(String l) {
         this.label = l;
+    }
+
+    private void setMaxConfidence(float maxConfidence) {
+        this.maxConfidence = maxConfidence;
     }
 }
