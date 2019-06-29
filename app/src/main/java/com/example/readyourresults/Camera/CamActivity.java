@@ -30,38 +30,41 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
-import com.example.readyourresults.Database.DatabaseHelper;
 import com.example.readyourresults.R;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 
 public class CamActivity extends AppCompatActivity implements LifecycleOwner, ResultsInterpreted {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[1];
     private String TAG = "CamActivity";
-    DatabaseHelper database;
     String testName;
     Activity thisActivity = this;
     Intent intent;
+    ProgressBar progressBar;
+    TextView analyzingText;
 
     public void resultsInterpreted(HashMap<String, Float> labelConfidences) {
         String formattedLabels;
         if (labelConfidences.isEmpty()) {
-            formattedLabels = "The analysis details could not be found. Common causes of this error include an improperly administered test or an invalid image.";
+            formattedLabels = "Could not determine a result based on the provided image. An inconclusive result is commonly caused by poor image quality factors such as bad lighting or blurriness.";
         } else {
             formattedLabels = formatLabels(labelConfidences);
         }
+        intent.putExtra("hash", labelConfidences);
         intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+        progressBar.setVisibility(View.GONE);
+        analyzingText.setVisibility(View.GONE);
         startActivity(intent);
         Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
+        finish();
     }
 
     @Override
@@ -82,6 +85,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         }
         getIntent().getSerializableExtra("Test Name");
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        analyzingText = (TextView) findViewById(R.id.analyzing_text);
 
         // Every time the provided texture view changes, recompute layout
         //viewFinder.addOnLayoutChangeListener {
@@ -171,10 +176,12 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                                 intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
                                 intent.putExtra("Test Type", testName);
                                 intent.putExtra("Image Path", ""+file.getAbsoluteFile());
-                                startActivity(intent);
-
                                 // TODO: Process Image
                                 AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(), (ResultsInterpreted) thisActivity);
+
+                                // start progress dialog
+                                progressBar.setVisibility(View.VISIBLE);
+                                analyzingText.setVisibility(View.VISIBLE);
                                 model.interpret();
                             }
                             @Override
