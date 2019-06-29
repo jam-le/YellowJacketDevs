@@ -31,6 +31,7 @@ import com.example.readyourresults.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -62,7 +63,7 @@ public class NewResultFragment extends Fragment {
 
         imageView = getView().findViewById(R.id.test_device_image);
         //testType = getView().findViewById(R.id.testType);
-        testOutcome = getView().findViewById(R.id.testOutcome);
+        testOutcome = getView().findViewById(R.id.test_result_outcome_text);
         //testDate = getView().findViewById(R.id.testDate);
         saveButton = getView().findViewById(R.id.save_result_btn);
         closeButton = getView().findViewById(R.id.close_result_btn);
@@ -79,9 +80,6 @@ public class NewResultFragment extends Fragment {
         } else {
             imageView.setImageBitmap(bitmapImage);
         }
-
-        //testType.setText(testTypeText);
-        //testOutcome.setText("Inconclusive");
 
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         date = new Date();
