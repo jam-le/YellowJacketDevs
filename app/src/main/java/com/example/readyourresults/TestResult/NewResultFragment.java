@@ -2,6 +2,8 @@ package com.example.readyourresults.TestResult;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -22,6 +24,8 @@ import android.widget.Toast;
 
 import com.example.readyourresults.CloseResultDialogFragment;
 import com.example.readyourresults.Database.DatabaseHelper;
+import com.example.readyourresults.Password.CreatePasswordActivity;
+import com.example.readyourresults.Password.PasswordDialogueFragment;
 import com.example.readyourresults.R;
 
 import java.text.DateFormat;
@@ -108,11 +112,7 @@ public class NewResultFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database.insertData(testTypeText, "Inconclusive",
-                        dateFormat.format(date),
-                        imagePath);
-                Toast toast = Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT);
-                toast.show();
+               handlePasswordProtection();
             }
         });
 
@@ -131,6 +131,30 @@ public class NewResultFragment extends Fragment {
         TextView confidences = getActivity().findViewById(R.id.confidences_text);
         confidences.setText(labels + additionalConfidencesInfo);
     }
+
+    public void handlePasswordProtection() {
+        //load password
+        SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0 );
+        String storedPassword = settings.getString("password", "");
+        if(storedPassword.equals("")) {
+            //if there is no password
+            Intent intent = new Intent(getContext(), CreatePasswordActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        } else {
+            final String testTypeText = getActivity().getIntent().getStringExtra("Test Type");
+            database.insertData(testTypeText, "Inconclusive",
+                    dateFormat.format(date),
+                    imagePath);
+            openPasswordDialog();
+        }
+    }
+
+    public void openPasswordDialog() {
+        PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment("Saved");
+        passwordDialogueFragment.show(getActivity().getSupportFragmentManager(), "password Dialogue");
+    }
+
 
     @Override
     public void onAttach(@NonNull Context context) {

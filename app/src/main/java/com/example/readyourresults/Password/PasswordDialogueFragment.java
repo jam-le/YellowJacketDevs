@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.readyourresults.MainActivity;
 import com.example.readyourresults.MySavedResults.MySavedResultsFragment;
 import com.example.readyourresults.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,7 +26,16 @@ public class PasswordDialogueFragment extends AppCompatDialogFragment {
     private TextInputLayout editPassword;
     private PasswordDialogueListener listener;
     private boolean validationSuccessful = false;
+    String toastMessage = "";
 
+    public PasswordDialogueFragment() {
+        super();
+    }
+
+    public PasswordDialogueFragment(String msg) {
+        super();
+        this.toastMessage = msg;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -67,6 +77,10 @@ public class PasswordDialogueFragment extends AppCompatDialogFragment {
                                     .addToBackStack(null)
                                     .commit();
                             mAlertDialog.dismiss();
+                            if (!toastMessage.equals("")) {
+                                Toast toast = Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
                         }
                     }
                 });
