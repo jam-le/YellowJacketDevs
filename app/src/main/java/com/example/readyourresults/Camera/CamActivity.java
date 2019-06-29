@@ -67,6 +67,41 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         finish();
     }
 
+    public void resultsInterpreted(HashMap<String, Float> labelConfidences, String maxLabel) {
+        String formattedLabels;
+        if (labelConfidences.isEmpty()) {
+            formattedLabels = "Could not determine a result based on the provided image. An inconclusive result is commonly caused by poor image quality factors such as bad lighting or blurriness.";
+        } else {
+            formattedLabels = formatLabels(labelConfidences);
+        }
+        intent.putExtra("hash", labelConfidences);
+        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+        intent.putExtra("MAXLABEL", maxLabel);
+        progressBar.setVisibility(View.GONE);
+        analyzingText.setVisibility(View.GONE);
+        startActivity(intent);
+        Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
+        finish();
+    }
+
+    public void resultsInterpreted(HashMap<String, Float> labelConfidences, String maxLabel, float maxConfidence) {
+        String formattedLabels;
+        if (labelConfidences.isEmpty()) {
+            formattedLabels = "Could not determine a result based on the provided image. An inconclusive result is commonly caused by poor image quality factors such as bad lighting or blurriness.";
+        } else {
+            formattedLabels = formatLabels(labelConfidences);
+        }
+        intent.putExtra("hash", labelConfidences);
+        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+        intent.putExtra("MAXLABEL", maxLabel);
+        intent.putExtra("MAXCONFIDENCE", maxConfidence);
+        progressBar.setVisibility(View.GONE);
+        analyzingText.setVisibility(View.GONE);
+        startActivity(intent);
+        Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
+        finish();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

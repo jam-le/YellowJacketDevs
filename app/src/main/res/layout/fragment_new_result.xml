@@ -57,8 +57,7 @@
                 android:layout_width="346dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="error"
-                android:textStyle="bold"
+                android:text=""
                 tools:layout_editor_absoluteX="32dp"
                 tools:layout_editor_absoluteY="511dp"/>
 
@@ -80,13 +79,20 @@
                     android:text="Analysis details of the results could not be found."/>
 
                 <TextView
+                    android:id="@+id/counseling_message_title_text"
+                    android:layout_width="346dp"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="What to Do Next:"
+                    android:textStyle="bold"/>
+                <TextView
                     android:id="@+id/counseling_message_text"
                     android:layout_width="346dp"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:gravity="center_horizontal"
-                    android:text="Counseling message goes here"
-                    android:textStyle="bold"/>
+                    android:text="Please see your doctor if you have concerns about your status."/>
             </LinearLayout>
 
     </LinearLayout>
