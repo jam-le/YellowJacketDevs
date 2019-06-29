@@ -35,6 +35,7 @@ public class HelpFragment extends Fragment {
         final Button question_03 = getView().findViewById(R.id.button_question_3);
         final Button question_04 = getView().findViewById(R.id.button_question_4);
         final Button question_05 = getView().findViewById(R.id.button_question_5);
+        final Button question_06 = getView().findViewById(R.id.button_question_6);
 
         final Drawable right_arrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_help_question_arrow, null);
         final Drawable down_arrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_down_arrow, null);
@@ -109,7 +110,32 @@ public class HelpFragment extends Fragment {
             }
         });
 
-        final TextView instiFaq = getView().findViewById(R.id.textview_answer_5);
+        final TextView instiVideo = getView().findViewById(R.id.textview_answer_5);
+        instiVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment instiVideoFragment = new InstiVideoFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_main, instiVideoFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        question_05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (instiVideo.getVisibility() == View.GONE) {
+                    instiVideo.setVisibility(View.VISIBLE);
+                    question_05.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
+                } else {
+                    instiVideo.setVisibility(View.GONE);
+                    question_05.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
+                }
+            }
+        });
+
+        final TextView instiFaq = getView().findViewById(R.id.textview_answer_6);
         instiFaq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,15 +147,15 @@ public class HelpFragment extends Fragment {
                         .commit();
             }
         });
-        question_05.setOnClickListener(new View.OnClickListener() {
+        question_06.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (instiFaq.getVisibility() == View.GONE) {
                     instiFaq.setVisibility(View.VISIBLE);
-                    question_05.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
+                    question_06.setCompoundDrawablesWithIntrinsicBounds(null, null, down_arrow, null);
                 } else {
                     instiFaq.setVisibility(View.GONE);
-                    question_05.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
+                    question_06.setCompoundDrawablesWithIntrinsicBounds(null, null, right_arrow, null);
                 }
             }
         });

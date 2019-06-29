@@ -1,6 +1,7 @@
 package com.example.readyourresults.Camera;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,14 +35,36 @@ import android.widget.Toast;
 import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
 import com.example.readyourresults.Preprocessing.ImageProcessor;
+import com.example.readyourresults.Database.DatabaseHelper;
 import com.example.readyourresults.R;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
-public class CamActivity extends AppCompatActivity implements LifecycleOwner {
+public class CamActivity extends AppCompatActivity implements LifecycleOwner, ResultsInterpreted {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[1];
     private String TAG = "CamActivity";
+    DatabaseHelper database;
+    String testName;
+    Activity thisActivity = this;
+    Intent intent;
+
+    public void resultsInterpreted(HashMap<String, Float> labelConfidences) {
+        String formattedLabels;
+        if (labelConfidences.isEmpty()) {
+            formattedLabels = "The analysis details could not be found. Common causes of this error include an improperly administered test or an invalid image.";
+        } else {
+            formattedLabels = formatLabels(labelConfidences);
+        }
+        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+        startActivity(intent);
+        Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +81,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
             ActivityCompat.requestPermissions(
                     this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
+        getIntent().getSerializableExtra("Test Name");
+
 
         // Every time the provided texture view changes, recompute layout
         //viewFinder.addOnLayoutChangeListener {
@@ -110,8 +135,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                         .build();
 
         final ImageCapture imageCapture = new ImageCapture(config);
+        testName = getIntent().getStringExtra("Test Type");
         Button captureImageButton = overlayView.findViewById(R.id.capture_image_button);
-
         captureImageButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -119,6 +144,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
                         File directory = new File(getExternalMediaDirs()[0] + "/RYR");
                         directory.mkdir();
                         File file = new File(directory, System.currentTimeMillis() + ".jpg");
+
                         imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                             @Override
                             public void onImageSaved(File file) {
@@ -134,26 +160,29 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
 
                                 // TODO: Results processing dialog should go here
 
+
                                 // TODO: Process Image
                                 ImageProcessor imp = new ImageProcessor(file);
                                 Bitmap processedImage = imp.getBtm();
                                 Toast.makeText(CamActivity.this, imp.toString(),
                                         Toast.LENGTH_LONG).show();
-                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext());
-                                String label = model.interpret();
+                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
+                                model.interpret();
 
                                 // TODO: Create conditional code that directs user
                                 // to buffer activity screen only if image processing
                                 // completes successfully
 
-                                // TODO: Africa
-
                                 // Create dialog that alerts user when result
                                 // analysis is complete
                                 // double-clicking creates a problem of loading two screens
-                                Intent intent = new Intent(getApplicationContext(), BufferActivity.class);
+                                intent = new Intent(getApplicationContext(), BufferActivity.class);
                                 intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
+                                intent.putExtra("Test Type", testName);
+                                intent.putExtra("Image Path", ""+file.getAbsoluteFile());
                                 startActivity(intent);
+
+                                
                             }
                             @Override
                             public void onError(
@@ -175,6 +204,12 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner {
         CameraX.bindToLifecycle(this, preview, imageCapture);
 
 
+    }
+
+    private String formatLabels(HashMap<String, Float> labelConfidences) {
+        String formattedString = labelConfidences.toString();
+        Log.d("CamActivity: ", formattedString);
+        return formattedString;
     }
 
     public static class CustomOverlayView extends View {
