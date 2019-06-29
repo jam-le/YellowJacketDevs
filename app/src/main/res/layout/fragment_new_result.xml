@@ -44,7 +44,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/test_result_text"
+                    android:id="@+id/test_result_title_text"
                     android:layout_width="346dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -52,6 +52,15 @@
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="32dp"
                     tools:layout_editor_absoluteY="511dp"/>
+                <TextView
+                android:id="@+id/test_result_outcome_text"
+                android:layout_width="346dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="error"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="511dp"/>
 
                 <TextView
                     android:id="@+id/confidences_title_text"
