@@ -202,6 +202,8 @@ public class ImageProcessor {
         return btm;
     }
 
+    public String getPath() { return path; }
+
     private Point[] detectSquare(Mat img, String path) {
         Log.d(TAG,"Start detectSquare" + path);
         ArrayList<Point> points = new ArrayList<>();
