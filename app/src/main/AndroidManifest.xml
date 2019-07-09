@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Password.CreatePasswordActivity" />
+        <activity android:name=".Password.ChangePasswordActivity" />
         <activity android:name=".Camera.CamActivity" /> <!-- <activity -->
 
         <!-- android:name=".WelcomeActivity" -->
