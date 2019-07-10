@@ -27,6 +27,7 @@ public class MySavedResultsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.saved_results);
         return inflater.inflate(R.layout.fragment_mysavedresults, container, false);
     }
 
