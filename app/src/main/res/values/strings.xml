@@ -57,7 +57,13 @@
     <string name="no">No</string>
     <string name="dialog_lose_result">Are you sure you want to close your results without saving? You will not be able to view these results again.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Counseling Messages -->
+    <string name="counseling_positive">A reactive result indicates that you are preliminarily positive for HIV antibodies. This result, however, must be confirmed by another test performed by a care provider. If you have participated in an HIV vaccine study, you should inform your care provider or the person giving you the INSTI™ HIV-1 Antibody Test.</string>
+    <string name="counseling_negative">A Non-reactive result means that this test did not detect HIV antibodies in your blood. However, in some cases HIV infection cannot be ruled out completely. If, in the last 3 months, you have had any of the contacts described in "How does someone get infected with HIV?" in the information section, there is a possibility that you may still be infected with HIV. HIV antibodies may not appear until a few months after infection with the virus. A very recent infection may not produce enough antibodies to be detected by this test. If you think your exposure has been less than 3 months, consider testing again at 3 months after your exposure.</string>
+    <string name="counseling_invalid">If the test device is dirtied and/or the control © indicator is not clearly visible, please re-take another test and try again.</string>
+    <string name="counseling_inconclusive">Please capture another image if the test is still within the valid read period. <b>Do not read the results if more than 5 minutes has elapsed following the addition of bottle 3.</b></string>
+    <string name="result_invalid">The app could not identify the test control spot. Common causes of this error include an error in performing the test.</string>
+    <string name="result_inconclusive_high_confidence">An inconclusive result is commonly caused by poor image quality factors such as bad lighting, blurriness or the test device is out of frame.</string>
+    <string name="result_inconclusive_low_confidence">The confidence levels are not high enough to generate a strong conclusion.</string>
 
 </resources>

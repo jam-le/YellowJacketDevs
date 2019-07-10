@@ -53,13 +53,13 @@
                     tools:layout_editor_absoluteX="32dp"
                     tools:layout_editor_absoluteY="511dp"/>
                 <TextView
-                android:id="@+id/test_result_outcome_text"
-                android:layout_width="346dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text=""
-                tools:layout_editor_absoluteX="32dp"
-                tools:layout_editor_absoluteY="511dp"/>
+                    android:id="@+id/test_result_outcome_text"
+                    android:layout_width="346dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    tools:layout_editor_absoluteX="32dp"
+                    tools:layout_editor_absoluteY="511dp"/>
 
                 <TextView
                     android:id="@+id/confidences_title_text"
