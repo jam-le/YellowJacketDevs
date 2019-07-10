@@ -4,6 +4,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.readyourresults.Camera.CamActivity;
-<<<<<<< HEAD
-import com.example.readyourresults.Camera.CamFragment;
-import com.example.readyourresults.Help.InfoBrochureFragment;
-=======
->>>>>>> 86852c1c1b5651d5b841a556c7305b2c16a8b54e
+
 import com.example.readyourresults.R;
 import com.github.barteksc.pdfviewer.PDFView;
 
