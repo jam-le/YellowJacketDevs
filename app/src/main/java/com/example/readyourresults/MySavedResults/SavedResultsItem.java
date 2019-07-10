@@ -1,18 +1,31 @@
 package com.example.readyourresults.MySavedResults;
 
+import android.graphics.Bitmap;
+
 public class SavedResultsItem {
 
     private String title;
     private String testType;
     private String testOutcome;
     private String testDate;
+    private String testImage;
     private boolean expanded;
 
-    public SavedResultsItem(String title, String testType, String testOutcome, String testDate) {
+    public SavedResultsItem(String title, String testType, String testOutcome, String testDate,
+                            String testImage) {
         this.title = title;
         this.testType = testType;
         this.testOutcome =testOutcome;
         this.testDate = testDate;
+        this.testImage = testImage;
+    }
+
+    public String getTestImage() {
+        return testImage;
+    }
+
+    public void setTestImage(String testImage) {
+        this.testImage = testImage;
     }
 
     public String getTitle() {

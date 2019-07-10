@@ -1,8 +1,10 @@
-package com.example.readyourresults;
+package com.example.readyourresults.TestResult;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.example.readyourresults.R;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,12 +25,12 @@ import com.example.readyourresults.Password.PasswordDialogueFragment;
 import com.example.readyourresults.Settings.SettingsFragment;
 import com.example.readyourresults.TestSelect.SelectFragment;
 
-public class MainActivity extends AppCompatActivity 
+public class TestResultActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, PasswordDialogueFragment.PasswordDialogueListener {
-    private static final String TAG =MainActivity.class.getSimpleName();
+    private static final String TAG =TestResultActivity.class.getSimpleName();
 
     Fragment fragment;
-    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentManager fragmentManager;
     String storedPassword;
     String password;
 
@@ -40,17 +42,20 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle(null);
 
-        HomeFragment homeFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("CONFIDENCES", getIntent().getStringExtra("RESULTS_AND_CONFIDENCES"));
+        NewResultFragment newResultFragment = new NewResultFragment();
+        newResultFragment.setArguments(bundle);
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.content_main, homeFragment)
+        transaction.add(R.id.content_main, newResultFragment)
                 .commit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new SelectFragment();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.content_main, fragment)
+                    .addToBackStack(null)
                     .commit();
         } else if (id == R.id.nav_saved) {
             handlePasswordProtection();

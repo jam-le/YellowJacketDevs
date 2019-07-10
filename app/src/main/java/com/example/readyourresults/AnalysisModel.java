@@ -6,8 +6,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.readyourresults.Camera.ResultsInterpreted;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.common.modeldownload.FirebaseLocalModel;
@@ -18,13 +21,18 @@ import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabelerOptions;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class AnalysisModel {
     Bitmap bitmapImage;
     private String label;
+    private float maxConfidence;
+    private HashMap<String, Float> labelConfidences = new HashMap<>();
 
-    public AnalysisModel(Bitmap btm, Context con) {
+    private ResultsInterpreted resultsInterpreted;
+
+    public AnalysisModel(Bitmap btm, Context con, ResultsInterpreted event) {
         bitmapImage = btm;
         FirebaseApp.initializeApp(con);
         FirebaseLocalModel localModel = new FirebaseLocalModel.Builder("my_local_model")
@@ -32,6 +40,7 @@ public class AnalysisModel {
                 .build();
         FirebaseModelManager.getInstance().registerLocalModel(localModel);
 
+        resultsInterpreted = event;
 
         //Testing different files passed into .setAssetFilePath
         //FirebaseLocalModel localModel2 = new FirebaseLocalModel.Builder("my_local_model2")
@@ -41,7 +50,7 @@ public class AnalysisModel {
         // the local models do not appear to be null
     }
 
-    public String interpret() {
+    public void interpret() {
         String ans = "";
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmapImage);
 
@@ -70,12 +79,17 @@ public class AnalysisModel {
                                 String text = lab.getText();
                                 float confidence = lab.getConfidence();
                                 Log.d("CameraXApp", text + ": " + confidence);
+                                labelConfidences.put(text, confidence);
                                 if (confidence > max) {
                                     max = confidence;
                                     maxLabel = lab.getText();
+                                    setLabel(maxLabel);
+                                    setMaxConfidence(max);
                                 }
                             }
-                            setLabel(maxLabel);
+                            Log.d("AnalysisModel: ", labelConfidences.toString() + "max label:" + maxLabel);
+
+                            resultsInterpreted.resultsInterpreted(labelConfidences, maxLabel, maxConfidence);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -84,18 +98,22 @@ public class AnalysisModel {
                             // Task failed with an exception
                             Log.d("CameraXApp", "hello "+ e.getMessage());
                         }
-                    });
+                    })
+            .addOnCompleteListener(new OnCompleteListener<List<FirebaseVisionImageLabel>>() {
+                @Override
+                public void onComplete(@NonNull Task<List<FirebaseVisionImageLabel>> task) {
+                    Log.d("ANALYSISMODEL: ", "interpret() completed. labelConfidences = " + labelConfidences);
+                }
+            });
         } catch (FirebaseMLException e) {
             Log.d("CameraXApp", "FirebaseMLException during getOnDeviceAutoMLImageLabeler()");
         }
-
-        Log.d("Label", ""+this.label);
-        return this.getLabel();
-    }
-    public String getLabel() {
-        return this.label;
     }
     private void setLabel(String l) {
         this.label = l;
+    }
+
+    private void setMaxConfidence(float maxConfidence) {
+        this.maxConfidence = maxConfidence;
     }
 }
