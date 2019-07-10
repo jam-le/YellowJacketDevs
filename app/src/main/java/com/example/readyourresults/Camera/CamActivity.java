@@ -36,6 +36,9 @@ import android.widget.Toast;
 
 import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
+
+import com.example.readyourresults.Preprocessing.ImageProcessor;
+import com.example.readyourresults.Database.DatabaseHelper;
 import com.example.readyourresults.R;
 
 import java.io.File;
@@ -200,6 +203,14 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                                 // TODO: Results processing dialog should go here
 
 
+                                // TODO: Process Image
+                                ImageProcessor imp = new ImageProcessor(file);
+                                Bitmap processedImage = imp.getBtm();
+                                Toast.makeText(CamActivity.this, imp.toString(),
+                                        Toast.LENGTH_LONG).show();
+                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
+                                model.interpret();
+
                                 // TODO: Create conditional code that directs user
                                 // to buffer activity screen only if image processing
                                 // completes successfully
@@ -211,13 +222,14 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                                 intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
                                 intent.putExtra("Test Type", testName);
                                 intent.putExtra("Image Path", ""+file.getAbsoluteFile());
-                                // TODO: Process Image
-                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(), (ResultsInterpreted) thisActivity);
+
+
 
                                 // start progress dialog
                                 progressBar.setVisibility(View.VISIBLE);
                                 analyzingText.setVisibility(View.VISIBLE);
                                 model.interpret();
+
                             }
                             @Override
                             public void onError(

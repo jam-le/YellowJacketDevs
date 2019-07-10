@@ -35,9 +35,12 @@ dependencies {
     androidTestImplementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
 
+
     implementation 'com.google.firebase:firebase-ml-vision:20.0.0'
     implementation 'com.google.firebase:firebase-ml-vision-automl:16.0.0'
 
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation project(path: ':openCVLibrary343')
+
 }
 apply plugin: 'com.google.gms.google-services'

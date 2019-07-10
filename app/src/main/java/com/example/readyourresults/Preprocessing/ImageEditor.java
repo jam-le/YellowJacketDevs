@@ -8,3 +8,4 @@ public class ImageEditor {
      * TODO/ I didn't want to merge yet, but we should start on this
      */
 }
+
