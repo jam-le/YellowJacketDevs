@@ -117,7 +117,7 @@ public class ImageProcessor {
 
         //Canny(gray, out,20,25,false);
         path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".")) + ":gray" + "new.bmp";
-        imwrite(path, gray);
+        //imwrite(path, gray);
         Log.d(TAG,"written");
         //crop to inner
         Point top = new Point(gray.width()*4/16,gray.height()*4/16);
