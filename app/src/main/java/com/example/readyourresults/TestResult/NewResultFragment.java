@@ -92,7 +92,7 @@ public class NewResultFragment extends Fragment {
         Log.d("newResultFrag", "most likely outcome: " + mostLikelyTestOutcome + "; highestConfidence: " + highestConfidence);
 
         String additionalConfidencesInfo = "";
-        if (highestConfidence >= .8) {
+        if (highestConfidence >= .7) {
             if (mostLikelyTestOutcome.equals("reactive")) {
                 highestConfidenceLabel.setText("Positive");
                 counselingMessage.setText(R.string.counseling_positive);
@@ -102,16 +102,16 @@ public class NewResultFragment extends Fragment {
             } else if (mostLikelyTestOutcome.equals("inconclusive")) {
                 highestConfidenceLabel.setText("Inconclusive");
                 counselingMessage.setText(R.string.counseling_inconclusive);
-                additionalConfidencesInfo = "\n" + R.string.result_inconclusive_high_confidence;
+                additionalConfidencesInfo = "\n" + getString(R.string.result_inconclusive_high_confidence);
             } else if (mostLikelyTestOutcome.equals("invalid")) {
                 highestConfidenceLabel.setText("Invalid");
                 counselingMessage.setText(R.string.counseling_invalid);
-                additionalConfidencesInfo = "\n" + R.string.result_invalid;
+                additionalConfidencesInfo = "\n" + getString(R.string.result_invalid);
             }
         } else {
             highestConfidenceLabel.setText("Inconclusive");
             counselingMessage.setText(R.string.counseling_inconclusive);
-            additionalConfidencesInfo = "\n" + R.string.result_inconclusive_low_confidence;
+            additionalConfidencesInfo = "\n" + getString(R.string.result_inconclusive_low_confidence);
         }
 
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");
