@@ -66,8 +66,51 @@ public class ImageProcessor {
             Log.d(TAG,"oops");
         }
     }
-    private Bitmap btm;
     String path;
+    static int index = 0;
+    public ImageProcessor(File img, File destDir) {
+        index++;
+        Mat src = new Mat();
+        src = imread(img.getAbsolutePath());
+        Mat out = new Mat();
+        out = imread(img.getAbsolutePath());
+
+        path = destDir.getAbsolutePath() + "/img" +index + ".bmp";
+        Point[] corns = detectSquare(src,path);
+        Boolean cropped = false;
+        if (corns.length != 2){
+            Log.d(TAG,"OOPS");
+        } else {
+            Log.d(TAG,corns.toString());
+            Point a = corns[0];
+            Point b = corns[1];
+            Rect rectCrop = new Rect(a, b);
+
+            out = out.submat(rectCrop);
+            cropped = true;
+        }
+        //Circle Detection
+        Mat gray = new Mat();
+        Imgproc.cvtColor(out, gray, COLOR_BGR2GRAY);
+//        Log.d(TAG,"type1:" + out.type());
+//        Log.d(TAG,"type2:" + gray.type());
+
+        //crop to inner
+        Point top = new Point(gray.width()*4/16,gray.height()*4/16);
+        Point bot = new Point(gray.width()*12/16,gray.height()*12/16);
+        Rect crop = new Rect(top, bot);
+        gray = gray.submat(crop);
+        out = out.submat(crop);
+        Mat equ = new Mat();
+        equalizeHist(gray,equ);
+        Imgproc.cvtColor(equ, equ, COLOR_GRAY2BGR);
+        Mat retVal = new Mat();
+        ArrayList<Mat> mats = new ArrayList<>();
+        mats.add(out);
+        mats.add(equ);
+        vconcat(mats,retVal);
+        imwrite(path, retVal);
+    }
     public ImageProcessor(File img) {
 
         Mat src = new Mat();
@@ -75,7 +118,7 @@ public class ImageProcessor {
         Mat out = new Mat();
         out = imread(img.getAbsolutePath());
 
-        path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".jpg")) + ":" + "corn.bmp";
+        path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".")) + ":" + "processed.bmp";
         Point[] corns = detectSquare(src,path);
         Boolean cropped = false;
         if (corns.length != 2){
@@ -96,15 +139,12 @@ public class ImageProcessor {
         Log.d(TAG,"type2:" + gray.type());
 
         //Canny(gray, out,20,25,false);
-        path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".")) + ":gray" + "new.bmp";
-        //imwrite(path, gray);
-        Log.d(TAG,"written");
         //crop to inner
-        Point top = new Point(gray.width()*4/16,gray.height()*4/16);
-        Point bot = new Point(gray.width()*12/16,gray.height()*12/16);
-        Rect crop = new Rect(top, bot);
-        gray = gray.submat(crop);
-        out = out.submat(crop);
+//        Point top = new Point(gray.width()*4/16,gray.height()*4/16);
+//        Point bot = new Point(gray.width()*12/16,gray.height()*12/16);
+//        Rect crop = new Rect(top, bot);
+//        gray = gray.submat(crop);
+//        out = out.submat(crop);
         Mat equ = new Mat();
         equalizeHist(gray,equ);
         Imgproc.cvtColor(equ, equ, COLOR_GRAY2BGR);
@@ -113,16 +153,10 @@ public class ImageProcessor {
         mats.add(out);
         mats.add(equ);
         vconcat(mats,retVal);
-        path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".")) + ":equal" + "new.bmp";
         imwrite(path, retVal);
-
     }
     public String toString() {
         return path;
-    }
-
-    public Bitmap getBtm() {
-        return btm;
     }
 
     public String getPath() { return path; }
@@ -153,7 +187,7 @@ public class ImageProcessor {
             line(all, new Point(lin[0], lin[1]), new Point(lin[2], lin[3]), new Scalar(0, 255, 0));
         }
         path = path.substring(0, path.lastIndexOf(".")) + ":" + ":all.bmp";
-        imwrite(path, all);
+        //imwrite(path, all);
         path = path.substring(0, path.lastIndexOf(":")) + ":" + ":new.bmp";
         for (double[] lin : newlines) {
             Log.d(TAG, "out" +lin[1]);
