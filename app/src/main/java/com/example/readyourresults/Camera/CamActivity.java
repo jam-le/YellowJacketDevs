@@ -284,7 +284,6 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
 
 
                 if (maxConfidence > .7 && !(maxLabel.equalsIgnoreCase("Inconclusive") ||  maxLabel.equalsIgnoreCase("Invalid"))) {
-
                     Log.d("CameraXApp", "Max confidence: " + maxConfidence);
                     // If maxConfidence of most likely label is > .95, autocapture picture.
                     File directory = new File(getExternalMediaDirs()[0] + "/RYR");
