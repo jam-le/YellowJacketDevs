@@ -18,6 +18,6 @@ INSTALLATION <br>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download the .apk file from https://github.com/JamieLee629/YellowJacketDevs/ <br>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open the file from the phone <br>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*If your phone does not allow installation of applications from an unknown source, you must turn this option by clicking  <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings > Allow from this source. See  https://github.com/JamieLee629/YellowJacketDevs/unksourceinstall.png <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings > Allow from this source. See [install from unknown source](unksourcseinstall.png) <br>
 RUNNING APPLICATION <br>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open application from Android device <br>
