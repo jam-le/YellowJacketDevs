@@ -1,9 +1,11 @@
 package com.example.readyourresults.Password;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,9 +18,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.readyourresults.CloseResultDialogFragment;
 import com.example.readyourresults.MainActivity;
 import com.example.readyourresults.MySavedResults.MySavedResultsFragment;
 import com.example.readyourresults.R;
+import com.example.readyourresults.SaveResultDialogFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class PasswordDialogueFragment extends AppCompatDialogFragment {
@@ -26,7 +30,7 @@ public class PasswordDialogueFragment extends AppCompatDialogFragment {
     private TextInputLayout editPassword;
     private PasswordDialogueListener listener;
     private boolean validationSuccessful = false;
-    String toastMessage = "";
+    String purpose = "";
 
     public PasswordDialogueFragment() {
         super();
@@ -34,7 +38,7 @@ public class PasswordDialogueFragment extends AppCompatDialogFragment {
 
     public PasswordDialogueFragment(String msg) {
         super();
-        this.toastMessage = msg;
+        this.purpose = msg;
     }
 
     @Override
@@ -70,16 +74,29 @@ public class PasswordDialogueFragment extends AppCompatDialogFragment {
                         } else if(!savedPassword.equals(passwordInput)){
                             editPassword.setError("Password Incorrect");
                         } else {
-                            Fragment fragment = new MySavedResultsFragment();
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction transaction = fragmentManager.beginTransaction();
-                            transaction.replace(R.id.content_main, fragment)
-                                    .addToBackStack(null)
-                                    .commit();
-                            mAlertDialog.dismiss();
-                            if (!toastMessage.equals("")) {
-                                Toast toast = Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT);
+                            if (purpose.equals("Navigation Bar")) {
+                                Fragment fragment = new MySavedResultsFragment();
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                transaction.replace(R.id.content_main, fragment)
+                                        .addToBackStack(null)
+                                        .commit();
+                                mAlertDialog.dismiss();
+                                Toast toast = Toast.makeText(getContext(), purpose, Toast.LENGTH_SHORT);
                                 toast.show();
+                            } else {
+
+                                //SaveResultDialogFragment fragment = new SaveResultDialogFragment();
+                                //fragment.show(getActivity().getSupportFragmentManager(), "Saved Dialogue");
+
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                Toast toast = Toast.makeText(getContext(), purpose, Toast.LENGTH_SHORT);
+                                toast.show();
+                                startActivity(intent);
+                                SaveResultDialogFragment fragment = new SaveResultDialogFragment();
+                                fragment.show(getActivity().getSupportFragmentManager(), "Saved Dialogue");
+                                getActivity().overridePendingTransition(0, 0);
+                                mAlertDialog.dismiss();
                             }
                         }
                     }
