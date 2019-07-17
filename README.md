@@ -1,41 +1,43 @@
-# YellowJacketDevs
-CS 3312 Junior Design Part 2 Project Repo – Read Your Results <br> <br>
-Release Notes version Read Your Results 1.0 <br>
-NEW FEATURES <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	ML functionality added <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Change password feature added<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Updated counseling messages<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Image autocapture added<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Added Pre-processing of images for higher rates of image classification <br>
-BUG FIXES <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Fixed Main Screen UI sometimes appearing in other parts of the program <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	Fixed persistent data not being deleted upon uninstalling the app <br>
-KNOWN BUGS <br>
+# Read Your Results
 
-Install Guide Read Your Results 1.0 <br>
-PRE-REQUISITES <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      This program requires the user to have an Android Operating System with an API level of at least 21 (Android 5.0/Lollipop) <br>
-DOWNLOAD<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      [Link](https://github.com/JamieLee629/YellowJacketDevs/blob/master/app-release.apk?raw=true) <br>
-INSTALLATION <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      1) Download the .apk file by clicking [this link](https://github.com/JamieLee629/YellowJacketDevs/blob/master/app-release.apk?raw=true) from your phone<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      2) Open the apk from the phone by either <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            a) Clicking the item in the [notification bar](notification.png) or<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            b) Opening the apk file from your phone's [file explorer](filexplorer.png)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      3) Allow installation of applications from an unknown source by clicking [Settings > Allow from this source](unksourcseinstall.png) <br>
-RUNNING APPLICATION <br>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open application from Android device <br>
+![Read Your Results](readyourresults.png)
+
+## RELEASE NOTES: Read Your Results Version 1.0
+
+### New Software Features
+- Significant improvements machine learning model accuracy compared to the last release
+  - Preprocessing was applied to input and training images to increase result accuracy
+    - Preprocessing involves using multiple informed crops
+    - Informed crop incorporates computer vision techniques such as Gaussian blur, Canny Edge detection and Hough feature detection to filter vertical and horizontal lines and construct an inner rectangle from which to crop the image
+  - Manually alter copies of training images to increase data volume
+- Change password feature added
+- Automatic detection and image capture feature added
+  - The app is now capable of detecting the testing device and capturing an image for analysis when the analysis reaches a confidence measure of greater than 0.7 (threshold can be adjusted)
+- Counseling messages that display on the results screen have been updated according to client specifications
+
+### Bug Fixes
+ - Fixed main screen user interface appearing in other parts of the program
+ - Fixed persistent data not being deleted upon uninstalling the app
+
+### Known Bugs
+- When pushing the image capture button in the camera view, sometimes the app will go back to the home page and show the home screen combined with the Select Device screen. This bug occurs infrequently
+
+## DEPENDENCIES
+- This program requires the Android Operating System with an API level of 21 (Android 5.0/Lollipop) or higher.
+
+## DOWNLOAD
+[Link](https://github.com/JamieLee629/YellowJacketDevs/blob/master/app-release.apk?raw=true)
+
+## INSTALLATION GUIDE
+
+- Download the apk on your Android device here: [Download Link](https://github.com/JamieLee629/YellowJacketDevs/blob/master/app-release.apk?raw=true)
+- Open the apk on your android device
+- After the download completes, open the app from your phone by either:
+  - Clicking the item in the [notification bar](notification.png) or
+  - Opening the apk file from your phone's [file explorer](filexplorer.png)
+- Allow installation of applications from an unknown source by clicking [Settings > Allow from this source](unksourcseinstall.png)
+- If you have downloaded an older version of the app, you may need to uninstall it manually first and then install the new apk
+
+## RUNNING THE APPLICATION
+- Open application from Android device
+- More information about how to use the app can be found on the Help screen in the app
