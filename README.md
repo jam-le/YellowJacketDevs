@@ -5,8 +5,11 @@
 ## RELEASE NOTES: Read Your Results Version 1.0
 
 ### New Software Features
-- Machine Learning feature improvements
-  - Preprocessing applied to input and training images to increase result accuracy
+- Significant improvements machine learning model accuracy compared to the last release
+  - Preprocessing was applied to input and training images to increase result accuracy
+    - Preprocessing involves using multiple informed crops
+    - Informed crop incorporates computer vision techniques such as Gaussian blur, Canny Edge detection and Hough feature detection to filter vertical and horizontal lines and construct an inner rectangle from which to crop the image
+  - Manually alter copies of training images to increase data volume
 - Change password feature added
 - Automatic detection and image capture feature added
   - The app is now capable of detecting the testing device and capturing an image for analysis when the analysis reaches a confidence measure of greater than 0.7 (threshold can be adjusted)
