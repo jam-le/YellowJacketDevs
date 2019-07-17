@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void openPasswordDialog() {
-        PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment();
+        PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment("Navigation Bar");
         passwordDialogueFragment.show(getSupportFragmentManager(), "password Dialogue");
     }
 
