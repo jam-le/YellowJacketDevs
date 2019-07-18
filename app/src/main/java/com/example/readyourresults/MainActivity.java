@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         //Uncomment this line for processing training data
-        ImageEditor imageEditor = new ImageEditor(this);
+        //ImageEditor imageEditor = new ImageEditor(this);
 
         HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
