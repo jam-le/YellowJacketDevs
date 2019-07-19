@@ -30,6 +30,8 @@ public class HelpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        getActivity().setTitle(R.string.help);
+
         final Button question_01 = getView().findViewById(R.id.button_question_1);
         final Button question_02 = getView().findViewById(R.id.button_question_2);
         final Button question_03 = getView().findViewById(R.id.button_question_3);

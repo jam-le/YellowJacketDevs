@@ -44,6 +44,7 @@ public class NewResultFragment extends Fragment {
     TextView testOutcome;
     TextView highestConfidenceLabel;
     TextView testDate;
+    TextView counselingMessage;
     Button saveButton;
     Button closeButton;
     Date date;
@@ -56,6 +57,7 @@ public class NewResultFragment extends Fragment {
         if (container != null) {
             container.removeAllViews();
         }
+        getActivity().setTitle(R.string.results);
         return inflater.inflate(R.layout.fragment_new_result, container, false);
     }
 
@@ -69,6 +71,7 @@ public class NewResultFragment extends Fragment {
         highestConfidenceLabel = getView().findViewById(R.id.test_result_outcome_text);
         saveButton = getView().findViewById(R.id.save_result_btn);
         closeButton = getView().findViewById(R.id.close_result_btn);
+        counselingMessage = getView().findViewById(R.id.counseling_message_text);
 
         imagePath = getActivity().getIntent().getStringExtra("Image Path");
         Log.d(TAG, "TEST IMAGE " + imagePath);
@@ -90,19 +93,26 @@ public class NewResultFragment extends Fragment {
         Log.d("newResultFrag", "most likely outcome: " + mostLikelyTestOutcome + "; highestConfidence: " + highestConfidence);
 
         String additionalConfidencesInfo = "";
-        if (highestConfidence >= .8) {
+        if (highestConfidence >= .7) {
             if (mostLikelyTestOutcome.equals("reactive")) {
                 highestConfidenceLabel.setText("Positive");
+                counselingMessage.setText(R.string.counseling_positive);
             } else if (mostLikelyTestOutcome.equals("non-reactive") || mostLikelyTestOutcome.equals("nonreactive")) {
                 highestConfidenceLabel.setText("Negative");
+                counselingMessage.setText(R.string.counseling_negative);
             } else if (mostLikelyTestOutcome.equals("inconclusive")) {
                 highestConfidenceLabel.setText("Inconclusive");
+                counselingMessage.setText(R.string.counseling_inconclusive);
+                additionalConfidencesInfo = "\n" + getString(R.string.result_inconclusive_high_confidence);
             } else if (mostLikelyTestOutcome.equals("invalid")) {
                 highestConfidenceLabel.setText("Invalid");
+                counselingMessage.setText(R.string.counseling_invalid);
+                additionalConfidencesInfo = "\n" + getString(R.string.result_invalid);
             }
-        }else {
+        } else {
             highestConfidenceLabel.setText("Inconclusive");
-            additionalConfidencesInfo = "\nThe confidence levels are not high enough to generate a strong conclusion.";
+            counselingMessage.setText(R.string.counseling_inconclusive);
+            additionalConfidencesInfo = "\n" + getString(R.string.result_inconclusive_low_confidence);
         }
 
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");

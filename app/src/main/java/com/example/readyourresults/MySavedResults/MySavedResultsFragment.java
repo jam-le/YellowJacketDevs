@@ -27,6 +27,7 @@ public class MySavedResultsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.saved_results);
         return inflater.inflate(R.layout.fragment_mysavedresults, container, false);
     }
 
@@ -35,6 +36,7 @@ public class MySavedResultsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //recyclerView.setNestedScrollingEnabled(false);
 
         SavedResultsAdapter adapter = new SavedResultsAdapter(initData());
         ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);

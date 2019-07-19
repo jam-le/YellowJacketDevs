@@ -61,7 +61,6 @@ public class CreatePasswordActivity extends AppCompatActivity {
                                 "Password Saved Successfully",
                                 Toast.LENGTH_SHORT)
                                 .show();
-
                         //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         //startActivity(intent);
                         if (origin.equals("saveLater")) {
@@ -76,6 +75,7 @@ public class CreatePasswordActivity extends AppCompatActivity {
                         } else {
                             finish();
                         }
+
                     } else {
                         //there is no match for the passwords
                         editRepeatPassword.setError("Passwords Don't Match");
