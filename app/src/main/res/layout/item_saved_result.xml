@@ -52,8 +52,11 @@
 
             <ImageView
                 android:id="@+id/test_image"
+                android:adjustViewBounds="true"
                 android:layout_width="wrap_content"
+                android:maxWidth="150dp"
                 android:layout_height="wrap_content"
+                android:maxHeight="150dp"
                 android:layout_alignParentRight="true"
                 app:srcCompat="@mipmap/ic_launcher"/>
 
