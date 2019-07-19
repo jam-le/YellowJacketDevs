@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity
         if(storedPassword.equals("")) {
             //if there is no password
             Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
+            intent.putExtra("origin", "home");
             startActivity(intent);
             finish();
         } else {
