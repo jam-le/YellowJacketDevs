@@ -3,6 +3,7 @@ package com.example.readyourresults.Camera;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -180,8 +181,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        File directory = new File(getExternalMediaDirs()[0] + "/RYR");
-                        directory.mkdir();
+                        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                        File directory = cw.getDir("RYR", Context.MODE_PRIVATE);
                         File file = new File(directory, System.currentTimeMillis() + ".jpg");
 
                         imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {

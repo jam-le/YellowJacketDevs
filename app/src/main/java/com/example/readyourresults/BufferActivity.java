@@ -36,6 +36,11 @@ public class BufferActivity extends AppCompatActivity implements
     DateFormat dateFormat;
     Date date;
     String password;
+    String origin;
+    String testType;
+    String imagePath;
+    String maxLabel;
+    Float maxConfidence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +48,12 @@ public class BufferActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_buffer);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
-        final String testType = getIntent().getStringExtra("Test Type");
-        final String imagePath = getIntent().getStringExtra("Image Path");
-        String msg = getIntent().getStringExtra("IMAGE_SUCCESSFULLY_CAPTURED");
-        final String maxLabel = getIntent().getStringExtra("MAXLABEL");
-        final Float maxConfidence = getIntent().getFloatExtra("MAXCONFIDENCE", 0f);
-        Snackbar.make(findViewById(R.id.activity_buffer_layout), msg, Snackbar.LENGTH_SHORT).show();
+        testType = getIntent().getStringExtra("Test Type");
+        imagePath = getIntent().getStringExtra("Image Path");
+        //String msg = getIntent().getStringExtra("IMAGE_SUCCESSFULLY_CAPTURED");
+        maxLabel = getIntent().getStringExtra("MAXLABEL");
+        maxConfidence = getIntent().getFloatExtra("MAXCONFIDENCE", 0f);
+        //Snackbar.make(findViewById(R.id.activity_buffer_layout), msg, Snackbar.LENGTH_SHORT).show();
 
         database = new DatabaseHelper(getApplicationContext());
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -90,6 +95,7 @@ public class BufferActivity extends AppCompatActivity implements
         saveResultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                origin = "saveLater";
                 handlePasswordProtection(imagePath);
             }
         });
@@ -102,7 +108,15 @@ public class BufferActivity extends AppCompatActivity implements
         if(storedPassword.equals("")) {
             //if there is no password
             Intent intent = new Intent(BufferActivity.this, CreatePasswordActivity.class);
+            intent.putExtra("origin", origin);
+            intent.putExtra("Test Type", testType);
+            intent.putExtra("Image Path", imagePath);
+            intent.putExtra("RESULTS_AND_CONFIDENCES",
+                    getIntent().getStringExtra("RESULTS_AND_CONFIDENCES"));
+            intent.putExtra("MAXLABEL", maxLabel);
+            intent.putExtra("MAXCONFIDENCE", maxConfidence);
             startActivity(intent);
+            //startActivity(intent);
             finish();
         } else {
             Log.d("Buffer", "pass" + storedPassword);
