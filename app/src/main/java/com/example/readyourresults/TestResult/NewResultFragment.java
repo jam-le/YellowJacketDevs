@@ -149,6 +149,7 @@ public class NewResultFragment extends Fragment {
         if(storedPassword.equals("")) {
             //if there is no password
             Intent intent = new Intent(getContext(), CreatePasswordActivity.class);
+            intent.putExtra("origin", "saveAfterBuffer");
             startActivity(intent);
             getActivity().finish();
         } else {
