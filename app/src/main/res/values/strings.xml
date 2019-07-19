@@ -19,6 +19,7 @@
     <string name="test_select">Select Your Test</string>
     <string name="saved_results">My Saved Results</string>
     <string name="settings">Settings</string>
+    <string name="results">Results</string>
 
     <!-- Help Screen -->
     <string name="menu_help">Help</string>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     tools:context=".BufferActivity"
     android:id="@+id/activity_buffer_layout"
     android:layout_gravity="center">
@@ -13,88 +14,90 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center">
-    <TextView
-        android:id="@+id/summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="ANALYZING"
-        android:textSize="45sp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
-
-    <TextView
-        android:id="@+id/askresults"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Would you like to see your results now?"
-        android:visibility="invisible"
-        android:textSize="20sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintBottom_toTopOf="@id/results_button_container"
-        app:layout_constraintEnd_toEndOf="@id/summary"
-        app:layout_constraintStart_toStartOf="@id/summary"
-        app:layout_constraintTop_toBottomOf="@id/summary"/>
-
-    <LinearLayout
-        android:id="@+id/results_button_container"
-        android:layout_width="246dp"
-        android:layout_height="238dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/askresults">
-
-        <Button
-            android:id="@+id/view_result"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/summary"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="ANALYZING"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="45sp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_corners_button"
-            android:backgroundTint="@color/colorAccent"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text="@string/view_my_results_now"
-            android:textColor="#FFFFFF" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/saveresult"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/askresults"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Would you like to see your results now?"
+            android:textColor="@color/white"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_corners_button"
-            android:backgroundTint="@color/colorAccent"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text="@string/save_my_results_for_later"
-            android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/discard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corners_button"
-            android:backgroundTint="#831515"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text=" Discard Results"
-            android:textColor="#FFFFFF" />
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toTopOf="@id/results_button_container"
+            app:layout_constraintEnd_toEndOf="@id/summary"
+            app:layout_constraintStart_toStartOf="@id/summary"
+            app:layout_constraintTop_toBottomOf="@id/summary"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/results_button_container"
+            android:layout_width="246dp"
+            android:layout_height="238dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/askresults">
+
+            <Button
+                android:id="@+id/view_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_corners_button"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/view_my_results_now"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/saveresult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_corners_button"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/save_my_results_for_later"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/discard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners_button_red"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text=" Discard Results"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

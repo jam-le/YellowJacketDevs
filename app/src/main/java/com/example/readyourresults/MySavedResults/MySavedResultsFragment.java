@@ -36,6 +36,7 @@ public class MySavedResultsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //recyclerView.setNestedScrollingEnabled(false);
 
         SavedResultsAdapter adapter = new SavedResultsAdapter(initData());
         ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
