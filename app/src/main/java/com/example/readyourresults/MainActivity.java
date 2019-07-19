@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle(null);
 
         //Uncomment this line for processing training data
         //ImageEditor imageEditor = new ImageEditor(this);

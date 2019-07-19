@@ -18,6 +18,7 @@ import com.example.readyourresults.Database.DatabaseHelper;
 import com.example.readyourresults.Password.CreatePasswordActivity;
 import com.example.readyourresults.Password.PasswordDialogueFragment;
 import com.example.readyourresults.TestResult.TestResultActivity;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
@@ -39,6 +40,9 @@ public class BufferActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("");
+        //AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+        //appBarLayout.setElevation(0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buffer);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,

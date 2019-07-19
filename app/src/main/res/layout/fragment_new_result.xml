@@ -1,41 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:id="@+id/fragment_new_result"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/results_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Results"
-        android:textSize="35sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/test_device_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_gradient"
+    android:id="@+id/fragment_new_result"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/test_device_image"
         android:layout_width="260dp"
-        android:layout_height="246dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.25"
+        android:layout_marginTop="16dp"
+        android:maxHeight="200dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/results_text"
-        app:srcCompat="@mipmap/insti_test"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/insti_test" />
 
 
-    <LinearLayout
-        android:id="@+id/my_results_text_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/background_box"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/my_results_button_container"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/test_device_image"
-        app:layout_constraintBottom_toTopOf="@id/my_results_button_container">
+        app:layout_constraintTop_toBottomOf="@+id/test_device_image"
+        app:layout_constraintVertical_bias="0.583"
+        app:layout_constraintWidth_percent=".95">
+
+        <LinearLayout
+            android:id="@+id/my_results_text_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@id/my_results_button_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/test_device_image">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,94 +59,113 @@
 
                 <TextView
                     android:id="@+id/test_result_title_text"
-                    android:layout_width="346dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="Test Result:"
                     android:textStyle="bold"
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="8dp"
                     tools:layout_editor_absoluteX="32dp"
-                    tools:layout_editor_absoluteY="511dp"/>
+                    tools:layout_editor_absoluteY="511dp" />
+
                 <TextView
                     android:id="@+id/test_result_outcome_text"
-                    android:layout_width="346dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text=""
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="8dp"
                     tools:layout_editor_absoluteX="32dp"
-                    tools:layout_editor_absoluteY="511dp"/>
+                    tools:layout_editor_absoluteY="511dp" />
 
                 <TextView
                     android:id="@+id/confidences_title_text"
-                    android:layout_width="346dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:gravity="center"
+                    android:gravity="left"
+                    android:paddingBottom="8dp"
+                    android:paddingHorizontal="8dp"
                     android:text="Results and Confidence Measures:"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/confidences_text"
-                    android:layout_width="346dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:text="Analysis details of the results could not be found."/>
+                    android:gravity="left"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="8dp"
+                    android:text="Analysis details of the results could not be found." />
 
                 <TextView
                     android:id="@+id/counseling_message_title_text"
-                    android:layout_width="346dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:gravity="center_horizontal"
+                    android:gravity="left"
+                    android:paddingBottom="8dp"
+                    android:paddingHorizontal="8dp"
                     android:text="What to Do Next:"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/counseling_message_text"
-                    android:layout_width="346dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:gravity="center_horizontal"
-                    android:text="Please see your doctor if you have concerns about your status."/>
+                    android:gravity="left"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="8dp"
+                    android:text="Please see your doctor if you have concerns about your status." />
             </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/my_results_button_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/my_results_text_container"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHeight_percent=".15"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.986">
 
         <Button
             android:id="@+id/save_result_btn"
-            android:layout_width="148dp"
+            android:layout_width="150dp"
             android:layout_height="53dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/rounded_corners_button"
             android:text="Save Results"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.153"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/close_result_btn"
-            android:layout_width="148dp"
+            android:layout_width="150dp"
             android:layout_height="53dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/rounded_corners_button_red"
             android:text="Close"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.842"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

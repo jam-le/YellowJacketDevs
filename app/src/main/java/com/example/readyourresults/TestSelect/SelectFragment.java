@@ -4,6 +4,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.readyourresults.Camera.CamActivity;
+
 import com.example.readyourresults.R;
 import com.github.barteksc.pdfviewer.PDFView;
 
@@ -25,6 +29,7 @@ public class SelectFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.test_select);
         return inflater.inflate(R.layout.fragment_select, container, false);
     }
     @Override
@@ -42,15 +47,15 @@ public class SelectFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
                 // Set Brochure PDF
-                selectPdfView = v.findViewById(R.id.select_pdf_view);
-                String selectedItem = parentView.getItemAtPosition(position).toString();
-                testType = selectedItem;
+//                selectPdfView = v.findViewById(R.id.select_pdf_view);
+//                String selectedItem = parentView.getItemAtPosition(position).toString();
+//
+//                if (selectedItem.equals(getResources().getStringArray(R.array.test_array)[0])) {
+//                    selectPdfView.fromAsset("InstiProductInsert.pdf").load();
+//                } else {
+//                    selectPdfView.fromAsset("SubjectInformationBrochure.pdf").load();
+//                }
 
-                if (selectedItem.equals(getResources().getStringArray(R.array.test_array)[0])) {
-                    selectPdfView.fromAsset("InstiProductInsert.pdf").load();
-                } else {
-                    selectPdfView.fromAsset("SubjectInformationBrochure.pdf").load();
-                }
             }
 
             @Override
@@ -60,6 +65,18 @@ public class SelectFragment extends Fragment {
 
         });
 
+        TextView instiProductInsertLink = getView().findViewById(R.id.insti_product_insert_link);
+        instiProductInsertLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment packageInsertFragment = new PackageInsertFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_main, packageInsertFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         //Scan Results
         Button scan = getView().findViewById(R.id.scan_button);

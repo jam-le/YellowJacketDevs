@@ -1,228 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:id="@+id/fragment_help"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textview_help_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Help"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/scroll_view_container"/>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_gradient"
+    android:id="@+id/fragment_help"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scroll_view_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_box"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_help_title"
-        >
-    <LinearLayout
-        android:id="@+id/question_answer_box_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.123"
+        app:layout_constraintWidth_percent="0.95">
 
-        <Button
-            android:id="@+id/button_question_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#E7E7E7"
-            android:drawableRight="@drawable/ic_help_question_arrow"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text="@string/help_question_1_text"
-            android:textAlignment="viewStart"/>
         <LinearLayout
-            android:id="@+id/textview_answer_1"
+            android:id="@+id/question_answer_box_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/colorChild">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/help_answer_1_text"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
-            <TextView
-                android:id="@+id/info_brochure_link"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_question_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="#E7E7E7"
+                android:drawableRight="@drawable/ic_help_question_arrow"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/help_question_1_text"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false" />
+
+            <LinearLayout
+                android:id="@+id/textview_answer_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="@color/colorChild"
-                android:text="@string/info_brochure_link"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/help_answer_1_text" />
+
+                <TextView
+                    android:id="@+id/info_brochure_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorChild"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/info_brochure_link" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_question_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#E7E7E7"
+                android:drawableRight="@drawable/ic_help_question_arrow"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/help_question_2_text"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/question_answer_box_1"
+                app:layout_constraintVertical_bias="0.03" />
+
+            <TextView
+                android:id="@+id/textview_answer_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorChild"
+                android:padding="10dp"
+                android:text="@string/help_answer_2_text"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_question_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#E7E7E7"
+                android:drawableRight="@drawable/ic_help_question_arrow"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/help_question_3_text"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_question_2"
+                app:layout_constraintVertical_bias="0.03" />
+
+            <TextView
+                android:id="@+id/textview_answer_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorChild"
+                android:padding="10dp"
+                android:text="@string/help_answer_3_text"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_question_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#E7E7E7"
+                android:drawableRight="@drawable/ic_help_question_arrow"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/help_question_4_text"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_question_2"
+                app:layout_constraintVertical_bias="0.03" />
+
+            <TextView
+                android:id="@+id/textview_answer_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorChild"
+                android:padding="10dp"
+                android:text="@string/help_answer_4_text"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_question_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#E7E7E7"
+                android:drawableRight="@drawable/ic_help_question_arrow"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/help_question_5_text"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_question_2"
+                app:layout_constraintVertical_bias="0.03" />
+
+            <TextView
+                android:id="@+id/textview_answer_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorChild"
+                android:padding="10dp"
+                android:text="@string/help_answer_5_text"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_question_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="#E7E7E7"
+                android:drawableRight="@drawable/ic_help_question_arrow"
+                android:padding="20dp"
+                android:paddingRight="10dp"
+                android:text="@string/help_question_6_text"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_question_2"
+                app:layout_constraintVertical_bias="0.03" />
+
+            <TextView
+                android:id="@+id/textview_answer_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorChild"
+                android:padding="10dp"
+                android:text="@string/help_answer_6_text"
+                android:visibility="gone" />
         </LinearLayout>
-        <Button
-            android:id="@+id/button_question_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#E7E7E7"
-            android:drawableRight="@drawable/ic_help_question_arrow"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text="@string/help_question_2_text"
-            android:textAlignment="viewStart"
-            android:layout_gravity="start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/question_answer_box_1"
-            app:layout_constraintVertical_bias="0.03"/>
-
-        <TextView
-            android:id="@+id/textview_answer_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:background="@color/colorChild"
-            android:text="@string/help_answer_2_text"
-            android:padding="10dp"/>
-        <Button
-            android:id="@+id/button_question_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#E7E7E7"
-            android:drawableRight="@drawable/ic_help_question_arrow"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text="@string/help_question_3_text"
-            android:textAlignment="viewStart"
-            android:layout_gravity="start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_question_2"
-            app:layout_constraintVertical_bias="0.03"/>
-        <TextView
-            android:id="@+id/textview_answer_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:background="@color/colorChild"
-            android:text="@string/help_answer_3_text"
-            android:padding="10dp"/>
-
-        <Button
-        android:id="@+id/button_question_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="#E7E7E7"
-        android:drawableRight="@drawable/ic_help_question_arrow"
-        android:padding="20dp"
-        android:paddingRight="10dp"
-        android:text="@string/help_question_4_text"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_question_2"
-        app:layout_constraintVertical_bias="0.03"/>
-
-        <TextView
-            android:id="@+id/textview_answer_4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:background="@color/colorChild"
-            android:text="@string/help_answer_4_text"
-            android:padding="10dp"/>
-
-        <Button
-            android:id="@+id/button_question_5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#E7E7E7"
-            android:drawableRight="@drawable/ic_help_question_arrow"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text="@string/help_question_5_text"
-            android:textAlignment="viewStart"
-            android:layout_gravity="start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_question_2"
-            app:layout_constraintVertical_bias="0.03"/>
-
-        <TextView
-            android:id="@+id/textview_answer_5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:background="@color/colorChild"
-            android:text="@string/help_answer_5_text"
-            android:padding="10dp"/>
-
-        <Button
-            android:id="@+id/button_question_6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#E7E7E7"
-            android:drawableRight="@drawable/ic_help_question_arrow"
-            android:padding="20dp"
-            android:paddingRight="10dp"
-            android:text="@string/help_question_6_text"
-            android:textAlignment="viewStart"
-            android:layout_gravity="start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_question_2"
-            app:layout_constraintVertical_bias="0.03"/>
-
-        <TextView
-            android:id="@+id/textview_answer_6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:background="@color/colorChild"
-            android:text="@string/help_answer_6_text"
-            android:padding="10dp"/>
-    </LinearLayout>
 
     </ScrollView>
 
