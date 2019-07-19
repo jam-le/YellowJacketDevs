@@ -1,6 +1,6 @@
 # Read Your Results
 
-![Read Your Results](readyourresults.png)
+![Read Your Results](RYRDistributable.png)
 
 ## RELEASE NOTES: Read Your Results Version 1.0
 
@@ -11,6 +11,7 @@
     - Informed crop incorporates computer vision techniques such as Gaussian blur, Canny Edge detection and Hough feature detection to filter vertical and horizontal lines and construct an inner rectangle from which to crop the image
   - Manually alter copies of training images to increase data volume
 - Change password feature added
+- Major UI updates
 - Automatic detection and image capture feature added
   - The app is now capable of detecting the testing device and capturing an image for analysis when the analysis reaches a confidence measure of greater than 0.7 (threshold can be adjusted)
 - Counseling messages that display on the results screen have been updated according to client specifications
