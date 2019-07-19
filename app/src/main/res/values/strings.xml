@@ -56,6 +56,7 @@
     <string name="view_my_results_now">View My Results Now</string>
     <string name="save_my_results_for_later">Save My Results for Later</string>
     <string name="no">No</string>
+    <string name="saved">Go to "My Saved Results" to see your saved results!</string>
     <string name="dialog_lose_result">Are you sure you want to close your results without saving? You will not be able to view these results again.</string>
 
     <!-- Counseling Messages -->

@@ -3,6 +3,9 @@ package com.example.readyourresults;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.example.readyourresults.Preprocessing.ImageEditor;
+import com.example.readyourresults.Preprocessing.ImageProcessor;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle(null);
+
+        //Uncomment this line for processing training data
+        //ImageEditor imageEditor = new ImageEditor(this);
 
         HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -135,7 +141,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void openPasswordDialog() {
-        PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment();
+        PasswordDialogueFragment passwordDialogueFragment = new PasswordDialogueFragment("Navigation Bar");
         passwordDialogueFragment.show(getSupportFragmentManager(), "password Dialogue");
     }
 

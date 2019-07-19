@@ -9,14 +9,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ImageFormat;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraX;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageAnalysisConfig;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureConfig;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.core.PreviewConfig;
 import androidx.core.app.ActivityCompat;
@@ -33,13 +41,15 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
+import com.example.readyourresults.Preprocessing.ImageProcessor;
 import com.example.readyourresults.R;
-
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class CamActivity extends AppCompatActivity implements LifecycleOwner, ResultsInterpreted {
     private final int REQUEST_CODE_PERMISSIONS = 10;
@@ -50,6 +60,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
     Intent intent;
     ProgressBar progressBar;
     TextView analyzingText;
+    float maxConfidence;
+    String maxLabel;
 
     public void resultsInterpreted(HashMap<String, Float> labelConfidences) {
         String formattedLabels;
@@ -62,9 +74,6 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
         progressBar.setVisibility(View.GONE);
         analyzingText.setVisibility(View.GONE);
-        startActivity(intent);
-        Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
-        finish();
     }
 
     public void resultsInterpreted(HashMap<String, Float> labelConfidences, String maxLabel) {
@@ -79,9 +88,6 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         intent.putExtra("MAXLABEL", maxLabel);
         progressBar.setVisibility(View.GONE);
         analyzingText.setVisibility(View.GONE);
-        startActivity(intent);
-        Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
-        finish();
     }
 
     public void resultsInterpreted(HashMap<String, Float> labelConfidences, String maxLabel, float maxConfidence) {
@@ -95,11 +101,10 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
         intent.putExtra("MAXLABEL", maxLabel);
         intent.putExtra("MAXCONFIDENCE", maxConfidence);
+        this.maxConfidence = maxConfidence;
+        this.maxLabel =  maxLabel;
         progressBar.setVisibility(View.GONE);
         analyzingText.setVisibility(View.GONE);
-        startActivity(intent);
-        Log.d("CamActivity Callback: ", "Label Confidences: " + labelConfidences);
-        finish();
     }
 
     @Override
@@ -119,6 +124,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                     this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
         getIntent().getSerializableExtra("Test Name");
+        intent = new Intent(getApplicationContext(), BufferActivity.class);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         analyzingText = (TextView) findViewById(R.id.analyzing_text);
@@ -139,6 +145,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
     private TextureView viewFinder;
     View overlayView;
 
+
+    ImageCapture imageCapture;
     private void startCamera() {
         // TODO: Implement CameraX operations
         // Create configuration object for the viewfinder use case
@@ -173,7 +181,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                         .setTargetRotation(getWindowManager().getDefaultDisplay().getRotation())
                         .build();
 
-        final ImageCapture imageCapture = new ImageCapture(config);
+        imageCapture = new ImageCapture(config);
         testName = getIntent().getStringExtra("Test Type");
         Button captureImageButton = overlayView.findViewById(R.id.capture_image_button);
         captureImageButton.setOnClickListener(
@@ -199,6 +207,11 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
 
                                 // TODO: Results processing dialog should go here
 
+                                // TODO: Process Image
+                                ImageProcessor imp = new ImageProcessor(file);
+                                Toast.makeText(CamActivity.this, imp.toString(),
+                                        Toast.LENGTH_LONG).show();
+                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
 
                                 // TODO: Create conditional code that directs user
                                 // to buffer activity screen only if image processing
@@ -210,14 +223,14 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                                 intent = new Intent(getApplicationContext(), BufferActivity.class);
                                 intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
                                 intent.putExtra("Test Type", testName);
-                                intent.putExtra("Image Path", ""+file.getAbsoluteFile());
-                                // TODO: Process Image
-                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(), (ResultsInterpreted) thisActivity);
+                                intent.putExtra("Image Path", "" + file.getAbsoluteFile());
 
                                 // start progress dialog
                                 progressBar.setVisibility(View.VISIBLE);
                                 analyzingText.setVisibility(View.VISIBLE);
                                 model.interpret();
+                                startActivity(intent);
+                                finish();
                             }
                             @Override
                             public void onError(
@@ -232,13 +245,123 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                     }
                 });
 
+        ImageAnalysisConfig analysisConfig =
+                new ImageAnalysisConfig.Builder()
+                        .setTargetResolution(new Size(1280, 720))
+                        .setImageReaderMode(
+                            ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE)
+                        .build();
+
+        ImageAnalysis imageAnalysis = new ImageAnalysis(analysisConfig);
+
+        imageAnalysis.setAnalyzer(new TestDeviceAnalyzer());
+
+
         // Bind use cases to lifecycle
         // If Android Studio complains about "this" being not a LifecycleOwner
         // try rebuilding the project or updating the appcompat dependency to
         // version 1.1.0 or higher.
-        CameraX.bindToLifecycle(this, preview, imageCapture);
+        CameraX.bindToLifecycle(this, preview, imageCapture, imageAnalysis);
 
 
+    }
+
+    class TestDeviceAnalyzer implements ImageAnalysis.Analyzer {
+        private long lastAnalyzedTimestamp = 0L;
+
+        @Override
+        public void analyze(ImageProxy image, int rotationDegrees) {
+            long currentTimestamp = System.currentTimeMillis();
+            // Calculate the confidences no more often than every second
+            if (currentTimestamp - lastAnalyzedTimestamp >=
+                    TimeUnit.SECONDS.toMillis(1)) {
+                Bitmap bitmapImage = imageToBitmap(image.getImage(), rotationDegrees);
+
+                intent = new Intent(getApplicationContext(), BufferActivity.class);
+                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
+                model.interpret();
+
+
+                if (maxConfidence > .7 && !(maxLabel.equalsIgnoreCase("Inconclusive") ||  maxLabel.equalsIgnoreCase("Invalid"))) {
+
+                    Log.d("CameraXApp", "Max confidence: " + maxConfidence);
+                    // If maxConfidence of most likely label is > .95, autocapture picture.
+                    File directory = new File(getExternalMediaDirs()[0] + "/RYR");
+                    directory.mkdir();
+                    File file = new File(directory, System.currentTimeMillis() + ".jpg");
+
+                    imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
+                        @Override
+                        public void onImageSaved(File file) {
+                            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                            Uri contentUri = Uri.fromFile(file);
+                            mediaScanIntent.setData(contentUri);
+                            sendBroadcast(mediaScanIntent);
+
+                            String msg = "Photo capture succeeded: " + file.getAbsolutePath();
+                            Log.d("CameraXApp", msg);
+
+                            intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
+                            intent.putExtra("Test Type", testName);
+                            intent.putExtra("Image Path", "" + file.getAbsoluteFile());
+                            startActivity(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(
+                                ImageCapture.UseCaseError useCaseError,
+                                String message,
+                                Throwable cause) {
+                            // insert your code here.
+                            Log.e(TAG, "Error occurred in startCamera()");
+
+                        }
+                    });
+                }
+
+                // Update timestamp of last analyzed frame
+                lastAnalyzedTimestamp = currentTimestamp;
+            }
+        }
+    }
+
+    public Bitmap imageToBitmap(Image image, float rotationDegrees) {
+
+        assert (image.getFormat() == ImageFormat.NV21);
+
+        // NV21 is a plane of 8 bit Y values followed by interleaved  Cb Cr
+        ByteBuffer ib = ByteBuffer.allocate(image.getHeight() * image.getWidth() * 2);
+
+        ByteBuffer y = image.getPlanes()[0].getBuffer();
+        ByteBuffer cr = image.getPlanes()[1].getBuffer();
+        ByteBuffer cb = image.getPlanes()[2].getBuffer();
+        ib.put(y);
+        ib.put(cb);
+        ib.put(cr);
+
+        YuvImage yuvImage = new YuvImage(ib.array(),
+                ImageFormat.NV21, image.getWidth(), image.getHeight(), null);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        yuvImage.compressToJpeg(new Rect(0, 0,
+                image.getWidth(), image.getHeight()), 50, out);
+        byte[] imageBytes = out.toByteArray();
+        Bitmap bm = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        Bitmap bitmap = bm;
+
+        // On android the camera rotation and the screen rotation
+        // are off by 90 degrees, so if you are capturing an image
+        // in "portrait" orientation, you'll need to rotate the image.
+        if (rotationDegrees != 0) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotationDegrees);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bm,
+                    bm.getWidth(), bm.getHeight(), true);
+            bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+        }
+        return bitmap;
     }
 
     private String formatLabels(HashMap<String, Float> labelConfidences) {
