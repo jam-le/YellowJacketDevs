@@ -1,6 +1,6 @@
 # Read Your Results
 
-![Read Your Results](readyourresults.png)
+![Read Your Results](RYRDistributable.png)
 
 ## RELEASE NOTES: Read Your Results Version 1.0
 
