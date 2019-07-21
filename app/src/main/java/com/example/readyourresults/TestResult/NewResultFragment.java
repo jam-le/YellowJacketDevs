@@ -112,7 +112,7 @@ public class NewResultFragment extends Fragment {
         } else {
             highestConfidenceLabel.setText("Inconclusive");
             counselingMessage.setText(R.string.counseling_inconclusive);
-            additionalConfidencesInfo = "\n" + getString(R.string.result_inconclusive_low_confidence);
+            additionalConfidencesInfo = getString(R.string.result_inconclusive_low_confidence);
         }
 
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -138,8 +138,9 @@ public class NewResultFragment extends Fragment {
 
         //show confidences
         String labels = getArguments().getString("CONFIDENCES");
+        Log.d("NewResultFragment", "Result Confidences = " + labels);
         TextView confidences = getActivity().findViewById(R.id.confidences_text);
-        confidences.setText(labels + additionalConfidencesInfo);
+        confidences.setText(additionalConfidencesInfo);
     }
 
     public void handlePasswordProtection() {

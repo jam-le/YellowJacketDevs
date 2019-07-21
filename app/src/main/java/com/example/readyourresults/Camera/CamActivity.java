@@ -21,6 +21,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraX;
+import androidx.camera.core.FlashMode;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageAnalysisConfig;
 import androidx.camera.core.ImageCapture;
@@ -61,6 +62,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
     Intent intent;
     ProgressBar progressBar;
     TextView analyzingText;
+    HashMap<String, Float> labelConfidences;
+    String formattedLabels;
     float maxConfidence;
     String maxLabel;
 
@@ -102,6 +105,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
         intent.putExtra("MAXLABEL", maxLabel);
         intent.putExtra("MAXCONFIDENCE", maxConfidence);
+        this.labelConfidences = labelConfidences;
+        this.formattedLabels = formattedLabels;
         this.maxConfidence = maxConfidence;
         this.maxLabel =  maxLabel;
         progressBar.setVisibility(View.GONE);
@@ -183,6 +188,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                         .build();
 
         imageCapture = new ImageCapture(config);
+        imageCapture.setFlashMode(FlashMode.OFF);
         testName = getIntent().getStringExtra("Test Type");
         Button captureImageButton = overlayView.findViewById(R.id.capture_image_button);
         captureImageButton.setOnClickListener(
@@ -210,8 +216,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
 
                                 // TODO: Process Image
                                 ImageProcessor imp = new ImageProcessor(file);
-                                Toast.makeText(CamActivity.this, imp.toString(),
-                                        Toast.LENGTH_LONG).show();
+                                //Toast.makeText(CamActivity.this, imp.toString(),
+                                //        Toast.LENGTH_LONG).show();
                                 AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
 
                                 // TODO: Create conditional code that directs user
@@ -283,14 +289,15 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                 model.interpret();
 
 
-                if (maxConfidence > .7 && !(maxLabel.equalsIgnoreCase("Inconclusive") ||  maxLabel.equalsIgnoreCase("Invalid"))) {
-
+                if (maxConfidence > .7 && (!(maxLabel.equalsIgnoreCase("Inconclusive") || !maxLabel.equalsIgnoreCase("Invalid")))) {
+                    float freezeMaxConfidence = maxConfidence;
                     Log.d("CameraXApp", "Max confidence: " + maxConfidence);
                     // If maxConfidence of most likely label is > .95, autocapture picture.
                     File directory = new File(getExternalMediaDirs()[0] + "/RYR");
                     directory.mkdir();
                     File file = new File(directory, System.currentTimeMillis() + ".jpg");
 
+                    imageCapture.setFlashMode(FlashMode.OFF);
                     imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                         @Override
                         public void onImageSaved(File file) {
@@ -300,7 +307,13 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                             sendBroadcast(mediaScanIntent);
 
                             String msg = "Photo capture succeeded: " + file.getAbsolutePath();
-                            Log.d("CameraXApp", msg);
+                            Log.d("CameraXApp", msg + "Max confidence = " + maxConfidence + ", Max Label = " + maxLabel);
+
+
+                            intent.putExtra("hash", labelConfidences);
+                            intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+                            intent.putExtra("MAXLABEL", maxLabel);
+                            intent.putExtra("MAXCONFIDENCE", maxConfidence);
 
                             intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
                             intent.putExtra("Test Type", testName);

@@ -82,8 +82,8 @@ public class PasswordDialogueFragment extends AppCompatDialogFragment {
                                         .addToBackStack(null)
                                         .commit();
                                 mAlertDialog.dismiss();
-                                Toast toast = Toast.makeText(getContext(), purpose, Toast.LENGTH_SHORT);
-                                toast.show();
+                                //Toast toast = Toast.makeText(getContext(), purpose, Toast.LENGTH_SHORT);
+                                //toast.show();
                             } else {
 
                                 //SaveResultDialogFragment fragment = new SaveResultDialogFragment();
