@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.example.readyourresults.Database.DatabaseHelper;
+import com.example.readyourresults.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,8 @@ public class SavedResultsListHelper {
 
         Cursor res = database.getAllData();
 
+        String insti = context.getResources().getStringArray(R.array.test_array)[0];
+
         savedResultsItems = new ArrayList<>();
         int count = 0;
         while (res.moveToNext()) {
@@ -38,7 +41,7 @@ public class SavedResultsListHelper {
 
             SavedResultsItem savedResultsItem = new SavedResultsItem(
                     "Test " + count,
-                    "Test Type: " + testTypeBuffer.toString(),
+                    "Test Type: " + insti, //testTypeBuffer.toString(),
                     "Test Outcome: " + testOutcomeBuffer.toString(),
                     "Test Date: " + testDateBuffer.toString(),
                     testImagePathBuffer.toString()
