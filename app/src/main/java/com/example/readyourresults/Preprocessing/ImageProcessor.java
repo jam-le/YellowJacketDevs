@@ -173,54 +173,109 @@ public class ImageProcessor {
             Log.e(TAG, e.getMessage());
         }
     }
+
     public ImageProcessor(File img) {
 
-        Mat src = new Mat();
-        src = imread(img.getAbsolutePath());
-        Mat out = new Mat();
-        out = imread(img.getAbsolutePath());
+        try {
+            index++;
+            Mat src = new Mat();
+            src = imread(img.getAbsolutePath());
+            Mat out = new Mat();
+            out = imread(img.getAbsolutePath());
 
-        path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".")) + ":" + "processed.bmp";
-        Point[] corns = detectSquare(src,path);
-        Boolean cropped = false;
-        if (corns.length != 2){
-            Log.d(TAG,"OOPS");
-        } else {
-            Log.d(TAG,corns.toString());
-            Point a = corns[0];
-            Point b = corns[1];
-            Rect rectCrop = new Rect(a, b);
+            path = img.getAbsolutePath().substring(0, img.getAbsolutePath().lastIndexOf(".")) + ":" + "processed.bmp";
+            Point[] corns = detectSquare(src, path);
+            Boolean cropped = false;
+            if (corns.length != 2) {
+                Log.d(TAG, "OOPS");
+            } else {
+                Log.d(TAG, corns.toString());
+                Point a = corns[0];
+                Point b = corns[1];
+                Rect rectCrop = new Rect(a, b);
 
-            out = out.submat(rectCrop);
-            cropped = true;
-        }
-        //Circle Detection
-        Mat gray = new Mat();
-        Imgproc.cvtColor(out, gray, COLOR_BGR2GRAY);
-        Log.d(TAG,"type1:" + out.type());
-        Log.d(TAG,"type2:" + gray.type());
+                out = out.submat(rectCrop);
+                cropped = true;
+            }
+            //Circle Detection
+            Mat gray = new Mat();
+            Imgproc.cvtColor(out, gray, COLOR_BGR2GRAY);
+//        Log.d(TAG,"type1:" + out.type());
+//        Log.d(TAG,"type2:" + gray.type());
 
-        //Canny(gray, out,20,25,false);
-        //crop to inner
+            //crop to inner
 //        Point top = new Point(gray.width()*4/16,gray.height()*4/16);
 //        Point bot = new Point(gray.width()*12/16,gray.height()*12/16);
 //        Rect crop = new Rect(top, bot);
 //        gray = gray.submat(crop);
 //        out = out.submat(crop);
-        Mat equ = new Mat();
-        equalizeHist(gray,equ);
-        Imgproc.cvtColor(equ, equ, COLOR_GRAY2BGR);
-        Mat retVal = new Mat();
-        ArrayList<Mat> mats = new ArrayList<>();
-        mats.add(out);
-        mats.add(equ);
-        vconcat(mats,retVal);
-        if (retVal.width() > 600) {
-            Double ratio = 600.0 / retVal.width();
-            resize(retVal, retVal, new Size(ratio * retVal.width(), ratio * retVal.height()));
+            Mat equ = new Mat();
+            equalizeHist(gray, equ);
+
+            Mat blur = new Mat();
+            Size b = new Size(9, 9);
+            GaussianBlur(equ, blur, b, 2, 2);
+            GaussianBlur(equ, blur, b, 2, 2);
+            GaussianBlur(equ, blur, b, 2, 2);
+            Double bratio = 600.0 / blur.width();
+            resize(blur, blur, new Size(bratio * blur.width(), bratio * blur.height()));
+            resize(equ, equ, new Size(blur.width(), blur.height()));
+
+            Mat circles = new Mat();
+            /// Apply the Hough Transform to find the circles
+            HoughCircles(blur, circles, CV_HOUGH_GRADIENT, 1, 20, 80, 25, blur.rows() / 10, blur.rows() / 2);
+            Canny(blur, blur, 80, 25, false);
+            Imgproc.cvtColor(blur, blur, COLOR_GRAY2BGR);
+            /// Draw the circles detected
+            int avgx = blur.rows();
+            int avgy = blur.cols();
+            int avgr = blur.rows() / 2;
+            int count = 1;
+            for (int x = 0; x < circles.cols(); x++) {
+                double[] c = circles.get(0, x);
+                Point center = new Point(Math.round(c[0]), Math.round(c[1]));
+                // circle center
+                Imgproc.circle(blur, center, 1, new Scalar(0, 100, 100), 3, 8, 0);
+                // circle outline
+                int radius = (int) Math.round(c[2]);
+                Imgproc.circle(blur, center, radius, new Scalar(255, 0, 255), 3, 8, 0);
+                avgx += center.x;
+                avgy += center.y;
+                avgr += radius;
+                count += 1;
+            }
+            avgx /= count;
+            avgy /= count;
+            avgr /= count;
+            Point top = new Point((avgx - avgr < 0) ? 0 : avgx - avgr, (avgy - avgr < 0) ? 0 : avgy - avgr);
+            Point bot = new Point((avgx + avgr > blur.width()) ? blur.width() : avgx + avgr, (avgy + avgr > blur.height()) ? blur.height() : avgy + avgr);
+            Rect crop = new Rect(top, bot);
+            equ = equ.submat(crop);
+            equalizeHist(equ, equ);
+//        String circPath = destDir.getAbsolutePath() + "/circs" +index + ".bmp";
+//        imwrite(circPath,equ);
+//        Log.e(TAG,circPath + ": " + circles.cols());
+
+            Imgproc.cvtColor(equ, equ, COLOR_GRAY2BGR);
+            Mat retVal = new Mat();
+            ArrayList<Mat> mats = new ArrayList<>();
+            //mats.add(out);
+            mats.add(equ);
+            //mats.add(BlueCrop(out));
+            hconcat(mats, retVal);
+            retVal = equ;
+            if (retVal.width() > 600) {
+                Double ratio = 600.0 / retVal.width();
+                resize(retVal, retVal, new Size(ratio * retVal.width(), ratio * retVal.height()));
+            }
+            imwrite(path, retVal);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
-        imwrite(path, retVal);
     }
+
+
+
     public String toString() {
         return path;
     }

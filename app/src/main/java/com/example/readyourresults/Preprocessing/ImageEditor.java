@@ -17,18 +17,18 @@ public class ImageEditor {
     public ImageEditor(Context context) {
         File dir = new File(context.getExternalMediaDirs()[0] + "/training_data/invalid");
         File dest = new File(context.getExternalMediaDirs()[0] + "/processed_data/invalid");
-//        for (File file : dir.listFiles()) {
-////            Log.e(TAG, file.getName());
-//            ImageProcessor imageProcessor = new ImageProcessor(file,dest);
-////            Log.e(TAG, imageProcessor.getPath());
-//        }
-//        dir = new File(context.getExternalMediaDirs()[0] + "/training_data/reactive");
-//        dest = new File(context.getExternalMediaDirs()[0] + "/processed_data/reactive");
-//        for (File file : dir.listFiles()) {
-////            Log.e(TAG, file.getName());
-//            ImageProcessor imageProcessor = new ImageProcessor(file,dest);
-////            Log.e(TAG, imageProcessor.getPath());
-//        }
+        for (File file : dir.listFiles()) {
+//            Log.e(TAG, file.getName());
+            ImageProcessor imageProcessor = new ImageProcessor(file,dest);
+//            Log.e(TAG, imageProcessor.getPath());
+        }
+        dir = new File(context.getExternalMediaDirs()[0] + "/training_data/reactive");
+        dest = new File(context.getExternalMediaDirs()[0] + "/processed_data/reactive");
+        for (File file : dir.listFiles()) {
+//            Log.e(TAG, file.getName());
+            ImageProcessor imageProcessor = new ImageProcessor(file,dest);
+//            Log.e(TAG, imageProcessor.getPath());
+        }
         dir = new File(context.getExternalMediaDirs()[0] + "/training_data/nonreactive");
         dest = new File(context.getExternalMediaDirs()[0] + "/processed_data/nonreactive");
         for (File file : dir.listFiles()) {

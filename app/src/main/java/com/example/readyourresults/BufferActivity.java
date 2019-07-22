@@ -57,6 +57,8 @@ public class BufferActivity extends AppCompatActivity implements
         //String msg = getIntent().getStringExtra("IMAGE_SUCCESSFULLY_CAPTURED");
         maxLabel = getIntent().getStringExtra("MAXLABEL");
         maxConfidence = getIntent().getFloatExtra("MAXCONFIDENCE", 0f);
+        Log.e("D/Buffer:", maxLabel);
+        Log.e("D/Buffer:", "" + maxConfidence);
         //Snackbar.make(findViewById(R.id.activity_buffer_layout), msg, Snackbar.LENGTH_SHORT).show();
 
         database = new DatabaseHelper(getApplicationContext());

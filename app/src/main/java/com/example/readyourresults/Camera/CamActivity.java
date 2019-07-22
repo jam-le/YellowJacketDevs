@@ -46,6 +46,7 @@ import android.widget.Toast;
 import com.example.readyourresults.AnalysisModel;
 import com.example.readyourresults.BufferActivity;
 import com.example.readyourresults.Preprocessing.ImageProcessor;
+import com.example.readyourresults.ProcessedModel;
 import com.example.readyourresults.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -196,7 +197,9 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                     @Override
                     public void onClick(View view) {
                         ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                        File directory = cw.getDir("RYR", Context.MODE_PRIVATE);
+                        //File directory = cw.getDir("RYR", Context.MODE_PRIVATE);
+                        File directory = new File(getExternalMediaDirs()[0] + "/RYR");
+                        directory.mkdir();
                         File file = new File(directory, System.currentTimeMillis() + ".jpg");
 
                         imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
@@ -206,38 +209,30 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                                 Uri contentUri = Uri.fromFile(file);
                                 mediaScanIntent.setData(contentUri);
                                 sendBroadcast(mediaScanIntent);
-
-                                Bitmap bitmapImage = BitmapFactory.decodeFile(file.getAbsolutePath());
-
-                                String msg = "Photo capture succeeded: " + file.getAbsolutePath();
-                                Log.d("CameraXApp", msg);
-
-                                // TODO: Results processing dialog should go here
-
-                                // TODO: Process Image
-                                ImageProcessor imp = new ImageProcessor(file);
-                                //Toast.makeText(CamActivity.this, imp.toString(),
-                                //        Toast.LENGTH_LONG).show();
-                                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
-
-                                // TODO: Create conditional code that directs user
-                                // to buffer activity screen only if image processing
-                                // completes successfully
-
-                                // Create dialog that alerts user when result
-                                // analysis is complete
-                                // double-clicking creates a problem of loading two screens
-                                intent = new Intent(getApplicationContext(), BufferActivity.class);
-                                intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
-                                intent.putExtra("Test Type", testName);
-                                intent.putExtra("Image Path", "" + file.getAbsoluteFile());
-
-                                // start progress dialog
                                 progressBar.setVisibility(View.VISIBLE);
                                 analyzingText.setVisibility(View.VISIBLE);
+                                ImageProcessor imp = new ImageProcessor(file);
+                                Log.e(TAG, "width: " + imp.toString());
+                                //file = new File(file.getParent(), imp.toString());
+                                Bitmap bitmapImage = BitmapFactory.decodeFile(imp.toString());
+                                Log.e(TAG, "width: " + bitmapImage.getWidth());
+
+                                ProcessedModel model = new ProcessedModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
                                 model.interpret();
+
+                                String msg = "Photo capture succeeded: " + file.getAbsolutePath();
+                                Log.d("CameraXApp", msg + "Max confidence = " + maxConfidence + ", Max Label = " + maxLabel);
+
+
+                                intent.putExtra("hash", labelConfidences);
+                                intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+                                intent.putExtra("MAXLABEL", maxLabel);
+                                intent.putExtra("MAXCONFIDENCE", maxConfidence);
+
+                                intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
+                                intent.putExtra("Test Type", testName);
+                                intent.putExtra("Image Path", "" + imp.toString());
                                 startActivity(intent);
-                                finish();
                             }
                             @Override
                             public void onError(
@@ -293,6 +288,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                     float freezeMaxConfidence = maxConfidence;
                     Log.d("CameraXApp", "Max confidence: " + maxConfidence);
                     // If maxConfidence of most likely label is > .95, autocapture picture.
+
                     File directory = new File(getExternalMediaDirs()[0] + "/RYR");
                     directory.mkdir();
                     File file = new File(directory, System.currentTimeMillis() + ".jpg");
@@ -301,10 +297,21 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                     imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                         @Override
                         public void onImageSaved(File file) {
+
                             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                             Uri contentUri = Uri.fromFile(file);
                             mediaScanIntent.setData(contentUri);
                             sendBroadcast(mediaScanIntent);
+                            progressBar.setVisibility(View.VISIBLE);
+                            analyzingText.setVisibility(View.VISIBLE);
+                            ImageProcessor imp = new ImageProcessor(file);
+                            Log.e(TAG, "width: " + imp.toString());
+                            //file = new File(file.getParent(), imp.toString());
+                            Bitmap bitmapImage = BitmapFactory.decodeFile(imp.toString());
+                            Log.e(TAG, "width: " + bitmapImage.getWidth());
+
+                            ProcessedModel model = new ProcessedModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
+                            model.interpret();
 
                             String msg = "Photo capture succeeded: " + file.getAbsolutePath();
                             Log.d("CameraXApp", msg + "Max confidence = " + maxConfidence + ", Max Label = " + maxLabel);
@@ -317,7 +324,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
 
                             intent.putExtra("IMAGE_SUCCESSFULLY_CAPTURED", msg);
                             intent.putExtra("Test Type", testName);
-                            intent.putExtra("Image Path", "" + file.getAbsoluteFile());
+                            intent.putExtra("Image Path", "" + imp.toString());
                             startActivity(intent);
                             finish();
                         }

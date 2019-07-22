@@ -1,0 +1,4 @@
+inconclusive
+invalid
+nonreactive
+reactive
