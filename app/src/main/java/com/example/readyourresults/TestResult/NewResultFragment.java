@@ -50,6 +50,7 @@ public class NewResultFragment extends Fragment {
     Date date;
     DateFormat dateFormat;
     String imagePath;
+    String testResult;
 
     @Nullable
     @Override
@@ -77,7 +78,7 @@ public class NewResultFragment extends Fragment {
         Log.d(TAG, "TEST IMAGE " + imagePath);
         bitmapImage = BitmapFactory.decodeFile(imagePath);
         Matrix matrix = new Matrix();
-        matrix.postRotate(90);
+        //matrix.postRotate(90);
         if (bitmapImage != null) {
             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(),
                     bitmapImage.getHeight(), matrix, true);
@@ -96,23 +97,27 @@ public class NewResultFragment extends Fragment {
         if (highestConfidence >= .7) {
             if (mostLikelyTestOutcome.equals("reactive")) {
                 highestConfidenceLabel.setText("Positive");
+                testResult = "Positive";
                 counselingMessage.setText(R.string.counseling_positive);
             } else if (mostLikelyTestOutcome.equals("non-reactive") || mostLikelyTestOutcome.equals("nonreactive")) {
                 highestConfidenceLabel.setText("Negative");
+                testResult = "Negative";
                 counselingMessage.setText(R.string.counseling_negative);
             } else if (mostLikelyTestOutcome.equals("inconclusive")) {
                 highestConfidenceLabel.setText("Inconclusive");
+                testResult = "Inconclusive";
                 counselingMessage.setText(R.string.counseling_inconclusive);
                 additionalConfidencesInfo = "\n" + getString(R.string.result_inconclusive_high_confidence);
             } else if (mostLikelyTestOutcome.equals("invalid")) {
                 highestConfidenceLabel.setText("Invalid");
+                testResult = "Invalid";
                 counselingMessage.setText(R.string.counseling_invalid);
                 additionalConfidencesInfo = "\n" + getString(R.string.result_invalid);
             }
         } else {
             highestConfidenceLabel.setText("Inconclusive");
             counselingMessage.setText(R.string.counseling_inconclusive);
-            additionalConfidencesInfo = getString(R.string.result_inconclusive_low_confidence);
+            additionalConfidencesInfo = "\n" + getString(R.string.result_inconclusive_low_confidence);
         }
 
         dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -140,7 +145,7 @@ public class NewResultFragment extends Fragment {
         String labels = getArguments().getString("CONFIDENCES");
         Log.d("NewResultFragment", "Result Confidences = " + labels);
         TextView confidences = getActivity().findViewById(R.id.confidences_text);
-        confidences.setText(additionalConfidencesInfo);
+        confidences.setText(labels + additionalConfidencesInfo);
     }
 
     public void handlePasswordProtection() {
@@ -155,7 +160,7 @@ public class NewResultFragment extends Fragment {
             getActivity().finish();
         } else {
             final String testTypeText = getActivity().getIntent().getStringExtra("Test Type");
-            database.insertData(testTypeText, "Inconclusive",
+            database.insertData(testTypeText, testResult,
                     dateFormat.format(date),
                     imagePath);
             openPasswordDialog();

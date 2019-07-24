@@ -67,6 +67,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
     String formattedLabels;
     float maxConfidence;
     String maxLabel;
+    boolean processed;
 
     public void resultsInterpreted(HashMap<String, Float> labelConfidences) {
         String formattedLabels;
@@ -75,8 +76,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         } else {
             formattedLabels = formatLabels(labelConfidences);
         }
-        intent.putExtra("hash", labelConfidences);
-        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+//        intent.putExtra("hash", labelConfidences);
+//        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
         progressBar.setVisibility(View.GONE);
         analyzingText.setVisibility(View.GONE);
     }
@@ -88,9 +89,9 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         } else {
             formattedLabels = formatLabels(labelConfidences);
         }
-        intent.putExtra("hash", labelConfidences);
-        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
-        intent.putExtra("MAXLABEL", maxLabel);
+//        intent.putExtra("hash", labelConfidences);
+//        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+//        intent.putExtra("MAXLABEL", maxLabel);
         progressBar.setVisibility(View.GONE);
         analyzingText.setVisibility(View.GONE);
     }
@@ -102,10 +103,28 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         } else {
             formattedLabels = formatLabels(labelConfidences);
         }
-        intent.putExtra("hash", labelConfidences);
-        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
-        intent.putExtra("MAXLABEL", maxLabel);
-        intent.putExtra("MAXCONFIDENCE", maxConfidence);
+//        intent.putExtra("hash", labelConfidences);
+//        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+//        intent.putExtra("MAXLABEL", maxLabel);
+//        intent.putExtra("MAXCONFIDENCE", maxConfidence);
+        this.labelConfidences = labelConfidences;
+        this.formattedLabels = formattedLabels;
+        this.maxConfidence = maxConfidence;
+        this.maxLabel =  maxLabel;
+        progressBar.setVisibility(View.GONE);
+        analyzingText.setVisibility(View.GONE);
+    }
+    public void resultsInterpreted(HashMap<String, Float> labelConfidences, String maxLabel, float maxConfidence, boolean proc) {
+        String formattedLabels;
+        if (labelConfidences.isEmpty()) {
+            formattedLabels = "Could not determine a result based on the provided image. An inconclusive result is commonly caused by poor image quality factors such as bad lighting or blurriness.";
+        } else {
+            formattedLabels = formatLabels(labelConfidences);
+        }
+//        intent.putExtra("hash", labelConfidences);
+//        intent.putExtra("RESULTS_AND_CONFIDENCES", formattedLabels);
+//        intent.putExtra("MAXLABEL", maxLabel);
+//        intent.putExtra("MAXCONFIDENCE", maxConfidence);
         this.labelConfidences = labelConfidences;
         this.formattedLabels = formattedLabels;
         this.maxConfidence = maxConfidence;
@@ -119,7 +138,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cam);
         REQUIRED_PERMISSIONS[0] = Manifest.permission.CAMERA;
-
+        processed = false;
         viewFinder = findViewById(R.id.view_finder);
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -202,6 +221,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                         directory.mkdir();
                         File file = new File(directory, System.currentTimeMillis() + ".jpg");
 
+                        progressBar.setVisibility(View.VISIBLE);
+                        analyzingText.setVisibility(View.VISIBLE);
                         imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
                             @Override
                             public void onImageSaved(File file) {
@@ -209,16 +230,15 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                                 Uri contentUri = Uri.fromFile(file);
                                 mediaScanIntent.setData(contentUri);
                                 sendBroadcast(mediaScanIntent);
-                                progressBar.setVisibility(View.VISIBLE);
-                                analyzingText.setVisibility(View.VISIBLE);
                                 ImageProcessor imp = new ImageProcessor(file);
                                 Log.e(TAG, "width: " + imp.toString());
                                 //file = new File(file.getParent(), imp.toString());
                                 Bitmap bitmapImage = BitmapFactory.decodeFile(imp.toString());
                                 Log.e(TAG, "width: " + bitmapImage.getWidth());
-
+                                Log.e(TAG, "height: " + bitmapImage.getHeight());
                                 ProcessedModel model = new ProcessedModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
                                 model.interpret();
+                                processed = true;
 
                                 String msg = "Photo capture succeeded: " + file.getAbsolutePath();
                                 Log.d("CameraXApp", msg + "Max confidence = " + maxConfidence + ", Max Label = " + maxLabel);
@@ -263,6 +283,8 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
         // If Android Studio complains about "this" being not a LifecycleOwner
         // try rebuilding the project or updating the appcompat dependency to
         // version 1.1.0 or higher.
+        CameraX.unbindAll();
+
         CameraX.bindToLifecycle(this, preview, imageCapture, imageAnalysis);
 
 
@@ -279,19 +301,22 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                     TimeUnit.SECONDS.toMillis(1)) {
                 Bitmap bitmapImage = imageToBitmap(image.getImage(), rotationDegrees);
 
-                intent = new Intent(getApplicationContext(), BufferActivity.class);
-                AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
-                model.interpret();
-
+                if(!processed) {
+                    AnalysisModel model = new AnalysisModel(bitmapImage, getApplicationContext(), (ResultsInterpreted) thisActivity);
+                    model.interpret();
+                }
 
                 if (maxConfidence > .7 && (!(maxLabel.equalsIgnoreCase("Inconclusive") || !maxLabel.equalsIgnoreCase("Invalid")))) {
                     float freezeMaxConfidence = maxConfidence;
+                    intent = new Intent(getApplicationContext(), BufferActivity.class);
                     Log.d("CameraXApp", "Max confidence: " + maxConfidence);
                     // If maxConfidence of most likely label is > .95, autocapture picture.
 
                     File directory = new File(getExternalMediaDirs()[0] + "/RYR");
                     directory.mkdir();
                     File file = new File(directory, System.currentTimeMillis() + ".jpg");
+                    progressBar.setVisibility(View.VISIBLE);
+                    analyzingText.setVisibility(View.VISIBLE);
 
                     imageCapture.setFlashMode(FlashMode.OFF);
                     imageCapture.takePicture(file, new ImageCapture.OnImageSavedListener() {
@@ -302,8 +327,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
                             Uri contentUri = Uri.fromFile(file);
                             mediaScanIntent.setData(contentUri);
                             sendBroadcast(mediaScanIntent);
-                            progressBar.setVisibility(View.VISIBLE);
-                            analyzingText.setVisibility(View.VISIBLE);
+
                             ImageProcessor imp = new ImageProcessor(file);
                             Log.e(TAG, "width: " + imp.toString());
                             //file = new File(file.getParent(), imp.toString());
@@ -312,6 +336,7 @@ public class CamActivity extends AppCompatActivity implements LifecycleOwner, Re
 
                             ProcessedModel model = new ProcessedModel(bitmapImage, getApplicationContext(),(ResultsInterpreted) thisActivity);
                             model.interpret();
+                            processed = true;
 
                             String msg = "Photo capture succeeded: " + file.getAbsolutePath();
                             Log.d("CameraXApp", msg + "Max confidence = " + maxConfidence + ", Max Label = " + maxLabel);

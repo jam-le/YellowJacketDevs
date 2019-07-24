@@ -92,7 +92,7 @@ public class ProcessedModel {
                             }
                             Log.d("ProcessedModel: ", labelConfidences.toString() + "max label:" + maxLabel);
 
-                            resultsInterpreted.resultsInterpreted(labelConfidences, maxLabel, maxConfidence);
+                            resultsInterpreted.resultsInterpreted(labelConfidences, maxLabel, maxConfidence, true);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
