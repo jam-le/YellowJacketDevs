@@ -30,11 +30,11 @@
 None
 
 ## DOWNLOAD
-[Link](https://github.com/JamieLee629/YellowJacketDevs/blob/master/app-release.apk?raw=true)
+[Link](https://drive.google.com/open?id=1K_9vg4XSZgs40OQecvXIwF3LiFQdsvcg)
 
 ## INSTALLATION GUIDE
 
-- Download the apk on your Android device here: [Download Link](https://github.com/JamieLee629/YellowJacketDevs/blob/master/app-release.apk?raw=true)
+- Download the apk on your Android device here: [Download Link](https://drive.google.com/open?id=1K_9vg4XSZgs40OQecvXIwF3LiFQdsvcg)
 - Open the apk on your android device
 - After the download completes, open the app from your phone by either:
   - Clicking the item in the [notification bar](notification.png) or
